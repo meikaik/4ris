@@ -9,6 +9,28 @@
 #ifndef level_hpp
 #define level_hpp
 
-#include <stdio.h>
+#include <iostream>
+#include <vector>
+#include "position.hpp"
+
+class Level {
+    // [1] = I, [2] = J, [3] = L, [4] = O, [5] = S, [6] = Z, [7] = T
+    std::vector<float> probabilities;
+    int weight;
+    bool dropNewBlock;
+    char newBlockType;
+    int countTillNewBlock;
+    int levelNumber;
+    Coordinates blockPos;
+    int numBlocks;
+public:
+    Level(int);
+    void setWeight(int);
+    void setLevel(int);
+    void setNewBlock(char, int);
+    void increase();
+    void descrease();
+    
+};
 
 #endif /* level_hpp */

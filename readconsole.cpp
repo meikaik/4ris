@@ -9,6 +9,7 @@
 #include "readconsole.hpp"
 #include <fstream>
 #include "game.hpp"
+#include "score.hpp"
 using namespace std;
 
 ReadConsole::ReadConsole( Score *gameScore, int sLevel): startLevel(sLevel), gameScore{gameScore} {
@@ -108,6 +109,7 @@ void ReadConsole::replaceBlock(char block) {
 }
 void ReadConsole::restart() {
     delete currGame;
+    gameScore->resetCurrScore();
     currGame = new Game(gameScore);
     currGame->start("", 0, 0);
 }
