@@ -15,26 +15,22 @@
 class Score;
 
 class Game {
+    Level level;
     Board theBoard;
     TextDisplay tDisplay;
-    GraphicsDisplaygDisplay;
-    Level level;
-    bool random;
+    GraphicsDisplay gDisplay;
     bool graphics;
     Score *gameScore;
-    int outType;
+    bool outType;
 public:
-    ~Game();
     Game(Score *);
-    void start(std::string, int);
+    ~Game();
+    void start(std::string, bool, int);
     void levelUp();
     void levelDown();
     void replaceBlock(char);
     void hint();
     void makeMove(char);
-    void setLevel();
-    void currentLevel();
-    void makeLevel();
     void makeRandom(std::string *, bool);
     
 };

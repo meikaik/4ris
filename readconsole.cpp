@@ -11,7 +11,7 @@
 #include "game.hpp"
 using namespace std;
 
-ReadConsole::ReadConsole( Score *theScore): gameScore{theScore} {
+ReadConsole::ReadConsole( Score *gameScore, int sLevel): startLevel(sLevel), gameScore{gameScore} {
     startGame();
 }
 
@@ -109,7 +109,7 @@ void ReadConsole::replaceBlock(char block) {
 void ReadConsole::restart() {
     delete currGame;
     currGame = new Game(gameScore);
-    currGame->start("", 0);
+    currGame->start("", 0, 0);
 }
 void ReadConsole::hint() {
     currGame->hint();
@@ -122,5 +122,7 @@ void ReadConsole::levelAction(bool increase) {
     else currGame->levelDown();
 }
 void ReadConsole::startGame() {
-    restart();
+    delete currGame;
+    currGame = new Game(gameScore);
+    currGame->start("", 0, startLevel);
 }
