@@ -120,11 +120,18 @@ void ReadConsole::move(int moveCommand) {
     currGame->makeMove(moveCommand);
 }
 void ReadConsole::levelAction(bool increase) {
-    if (increase) currGame->levelUp();
-    else currGame->levelDown();
+    if (increase) {
+        currGame->levelUp();
+        startLevel ++;
+    }
+    else {
+        currGame->levelDown();
+        startLevel --;
+    }
 }
 void ReadConsole::startGame() {
     delete currGame;
     currGame = new Game(gameScore);
     currGame->start("", 0, startLevel);
+    if (startLevel == 0) sequence("sequence.txt");
 }
