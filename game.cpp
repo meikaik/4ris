@@ -7,6 +7,7 @@
 //
 
 #include "game.hpp"
+#include "position.hpp"
 using namespace std;
 
 Game::Game(Score* gameScore): gameScore{gameScore}, level{0}, theBoard{gameScore, &level}, tDisplay{&theBoard}, gDisplay{&theBoard} {

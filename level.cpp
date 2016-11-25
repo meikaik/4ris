@@ -61,6 +61,6 @@ void Level::setNewBlock(char blockType, int freq) {
 void Level::increase() {
     setLevel(levelNumber + 1);
 }
-void Level::descrease() {
+void Level::decrease() {
     setLevel(levelNumber - 1);
 }

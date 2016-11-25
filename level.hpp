@@ -29,7 +29,7 @@ public:
     void setLevel(int);
     void setNewBlock(char, int);
     void increase();
-    void descrease();
+    void decrease();
     
 };
 
