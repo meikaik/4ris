@@ -69,12 +69,12 @@ void Game::makeMove(char moveVal) {
 void Game::makeRandom(std::string *blockString, bool ran){
     
     if(ran && !(blockString)){
-        theBoard.Random(true);
+        theBoard.random(true);
         theBoard.genNewList();
     }
     else if (blockString){
         if (theBoard.getGenState == true){
-            theBoard.Random(false);
+            theBoard.random(false);
             theBoard.clearNext();
         }
         theBoard.newNextBlock(blockString);
