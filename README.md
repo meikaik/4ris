@@ -1,2 +1,3 @@
-# quadris
-CS246
+#Quadris 
+
+Work In Progress
