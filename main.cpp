@@ -11,6 +11,7 @@
 #include <sstream>
 #include <string>
 #include "readconsole.hpp"
+#include "score.hpp"
 using namespace std;
 
 int main(int argc, const char *argv[]) {
