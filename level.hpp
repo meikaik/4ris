@@ -34,7 +34,8 @@ class Level {
     void increase();
     void decrease();
     void random(bool ranVal);
-    bool ranState(); 
+    bool ranState();
+    int getLevel();
 };
 
 #endif /* level_hpp */

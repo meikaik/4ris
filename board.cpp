@@ -35,7 +35,7 @@ void Board::replaceBlock(char block){
     Coordinates center;
     
     //Get center of current block
-    nextBlockList.back().getCenter();
+    center = nextBlockList.back().getCenter();
     
     //Destroy current block and emplace a new one
     nextBlockList.pop_back();
@@ -46,7 +46,28 @@ void Board::replaceBlock(char block){
 }
 
 bool Board::checkValidPos(){
+    vector<Coordinates> pos;
+    int x, y;
     
+    //Get position of current block
+    pos = nextBlockList.back().getPos();
+    
+    //Loop through all positions
+    for (int i = 0; i < pos.size(); i++){
+        //Get X and Y
+        x = pos[i].getX();
+        y = pos[i].getY();
+        
+        //Check if coordinate is not within the grid
+        if (x >= 15 || x < 0 || y >= 11 || y < 0 ){
+            return false; //Invalid Pos
+        }
+        
+        //Check if coordinates are taken
+        if (grid[x][y] != ' '){
+            return false; //Invalid Pos
+        }
+    }
     
     return true;
 }
@@ -105,6 +126,9 @@ void Board::drop(){
         //Set values on grid
         grid[x][y] = blockType;
     }
+    
+    //Set level
+    nextBlockList.back().setLevel(levelInfo->getLevel());
     
     //Destroy next block and add block to block list
     blockList.emplace_back(Block{nextBlockList.back()});
@@ -165,13 +189,13 @@ void Board::clearRow(int rowNum){
     
     //Populate last row with spaces
     for (int i = 0; i < 11; i++){
-        grid[grid.end()].emplace_back(' ');
+        grid[14].emplace_back(' ');
     }
 }
 
 void Board::newNextBlock(string *blockStr){
     //Add new block to next block list
-    nextBlockList.emplace_back(Block(*blockStr[0]));
+    nextBlockList.emplace_back(Block((*blockStr)[0]));
 }
 
 void Board::clearNext() {
@@ -232,4 +256,5 @@ string Board::getBlockList(){
         grid[x][y] = ' ';
     }
 
+    return gridStr;
 }

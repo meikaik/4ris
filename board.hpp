@@ -15,8 +15,8 @@
 #include "level.hpp"
 #include "position.hpp"
 #include "score.hpp"
+#include "block.hpp"
 
-class Block;
 
 class Board {
     
@@ -31,7 +31,7 @@ public:
     void moveDown();
     void drop();
     void rotate(int degree);
-    void dropNewBlock(char block, int x, int y);
+    void dropNewBlock(char block);
     void checkRows();
     void clearRow(int rowNum);
     void random(bool randomVal);

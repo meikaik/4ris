@@ -80,3 +80,7 @@ bool Level::ranState() {
     //Return random state
     return isRandom;
 }
+
+int Level::getLevel(){
+    return levelNumber;
+}
