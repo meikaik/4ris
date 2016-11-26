@@ -34,10 +34,13 @@ public:
     void dropNewBlock(char block, int x, int y);
     void checkRows();
     void clearRow(int rowNum);
-    void addRow();
-    void random(bool isRandom);
+    void random(bool randomVal);
     void genNewList();
+    void translateBlock(int dir);
     bool getGenState();
+    bool checkValidPos();
+    void newNextBlock(std::string *blockStr);
+    void clearNext();
     std::string getBlockList();
     
 private:
@@ -47,6 +50,7 @@ private:
     Score * gameScore;
     int countSinceClear;
     std::vector<Block> blockList;
+    bool isRandom = false; 
 };
 
 #endif /* board_hpp */

@@ -45,22 +45,191 @@ void Board::replaceBlock(char block){
     nextBlockList.back().setCenter(center);
 }
 
-void Board::moveLeft(){
-    Position tempPosition;
+bool Board::checkValidPos(){
     
-    //Translate left
+    
+    return true;
 }
 
-Position Board::hint(char block){}
-void Board::moveRight(){}
-void Board::moveDown(){}
-void Board::drop(){}
-void Board::rotate(int degree){}
-void Board::dropNewBlock(char block, int x, int y){}
-void Board::checkRows(){}
-void Board::clearRow(int rowNum){}
-void Board::addRow(){}
-void Board::random(bool isRandom){}
+Position Board::hint(char block){
+    
+    
+    return Position();
+}
+
+void Board::translateBlock(int dir){
+    //Translate current block in specified direction
+    nextBlockList.back().translate(dir);
+    
+    //Check if new position is valid
+    if (!(checkValidPos())) nextBlockList.back().restoreOldPosition();
+}
+
+void Board::moveLeft(){
+    //Move block left
+    translateBlock(4);
+}
+
+void Board::moveRight(){
+    //Move block right
+    translateBlock(2);
+}
+
+void Board::moveDown(){
+    //Move block down
+    translateBlock(3);
+}
+
+void Board::drop(){
+    vector<Coordinates> pos;
+    char blockType = nextBlockList.back().type();
+    int x, y;
+    
+    //Keep moving down till, position is not valid
+    while (checkValidPos()){
+        nextBlockList.back().translate(3);
+    }
+    
+    //Restore old positiom
+    nextBlockList.back().restoreOldPosition();
+    
+    //Get Position
+    pos = nextBlockList.back().getPos();
+    
+    //Loop through positions and add them to grid
+    for (int i = 0; i < pos.size(); i++){
+        //Get x and y values
+        x = pos[i].getX();
+        y = pos[i].getY();
+        
+        //Set values on grid
+        grid[x][y] = blockType;
+    }
+    
+    //Destroy next block and add block to block list
+    blockList.emplace_back(Block{nextBlockList.back()});
+    nextBlockList.pop_back();
+    
+    //Regen list if random mode is true
+    if (isRandom && nextBlockList.size() == 0){
+        genNewList();
+    }
+    
+}
+
+void Board::rotate(int degree){
+    //Rotate Block
+    nextBlockList.back().rotateBlock(degree);
+    
+    //Check if new position is valid
+    if (!(checkValidPos())) nextBlockList.back().restoreOldPosition();
+}
+
+void Board::dropNewBlock(char block){
+    //Create a new block
+    nextBlockList.emplace_back(Block(block));
+    
+    //Drop new block
+    drop();
+}
+
+void Board::checkRows(){
+    bool clear = false;
+    
+    //Loop through rows to check for completness
+    for (int i = 0; i < 15; i++){
+        //Loop through columns to check for spaces
+        for (int j = 0; j < 11; j++ ){
+            if (grid[i][j] == ' '){
+                clear = false;
+            }
+            else {
+                clear = true;
+            }
+        }
+        
+        //Clear row if clear is true
+        if (clear) clearRow(i);
+        
+        //Reset clear variable to avoid undefined behaviour
+        clear = false;
+    }
+}
+
+void Board::clearRow(int rowNum){
+    //Erase conflictling row
+    grid.erase(grid.begin() + rowNum);
+    
+    //Add new empty row
+    grid.emplace_back(vector<char>());
+    
+    //Populate last row with spaces
+    for (int i = 0; i < 11; i++){
+        grid[grid.end()].emplace_back(' ');
+    }
+}
+
+void Board::newNextBlock(string *blockStr){
+    //Add new block to next block list
+    nextBlockList.emplace_back(Block(*blockStr[0]));
+}
+
+void Board::clearNext() {
+    //Clear next block list
+    nextBlockList.clear();
+}
+
+void Board::random(bool randomVal){
+    //Set randomize check boolean
+    isRandom = randomVal;
+    levelInfo->random(isRandom);
+}
+
 void Board::genNewList(){}
-bool Board::getGenState(){}
-string Board::getBlockList(){}
+
+bool Board::getGenState(){
+    //Return current randomize state
+    return levelInfo->ranState();
+}
+
+string Board::getBlockList(){
+    string gridStr;
+    char blockType = nextBlockList.back().type();
+    vector<Coordinates> pos;
+    int x, y;
+    
+    //Get position of current block
+    pos = nextBlockList.back().getPos();
+    
+    //Loop through positions and add them to grid
+    for (int i = 0; i < pos.size(); i++){
+        //Get x and y values
+        x = pos[i].getX();
+        y = pos[i].getY();
+        
+        //Set values on grid
+        grid[x][y] = blockType;
+    }
+    
+    //Loop through grid
+    for (int i = 0; i < 15; i++){
+        for (int j = 0; j < 15; j++){
+            //Add character to string
+            gridStr = gridStr + grid[i][j];
+        }
+        
+        //Add new line to string
+        gridStr = gridStr + "\n";
+    }
+    
+    //Loop through block positions and remove them from grid
+    for (int i = 0; i < pos.size(); i++){
+        //Get x and y values
+        x = pos[i].getX();
+        y = pos[i].getY();
+        
+        //Set values on grid
+        grid[x][y] = ' ';
+    }
+
+}
