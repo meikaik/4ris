@@ -12,7 +12,7 @@
 #include "score.hpp"
 using namespace std;
 
-ReadConsole::ReadConsole( Score *gameScore, int sLevel): startLevel(sLevel), gameScore{gameScore} {
+ReadConsole::ReadConsole(Score *gameScore, int startLevel, string scriptFile, bool textMode): gameScore{gameScore}, startLevel(startLevel),  scriptFile{scriptFile}, textMode{textMode} {
     startGame();
 }
 
@@ -132,6 +132,6 @@ void ReadConsole::levelAction(bool increase) {
 void ReadConsole::startGame() {
     delete currGame;
     currGame = new Game(gameScore);
-    currGame->start("", 0, startLevel);
-    if (startLevel == 0) sequence("sequence.txt");
+    currGame->start("", textMode, startLevel);
+    if (startLevel == 0) sequence(scriptFile);
 }
