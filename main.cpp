@@ -8,6 +8,7 @@
 
 #include <iostream>
 #include <fstream>
+#include <sstream>
 #include <string>
 #include "readconsole.hpp"
 using namespace std;
@@ -15,14 +16,26 @@ using namespace std;
 int main(int argc, const char *argv[]) {
     int seed = 0;
     int startLevel = 0;
-    bool textMode;
+    bool textMode = false;
     string scriptFile{"sequence.txt"};
     string argInput;
     for (int i = 0; i < argc; i++) {
         argInput = argv[i];
-        
+        if (argInput == "-text") {
+            textMode = true;
+        }
+        else if (argInput == "-seed") {
+            istringstream iss(argv[++i]);
+            iss >> seed;
+        }
+        else if (argInput == "-scriptfile") {
+            scriptFile = argv[++i];
+        }
+        else if (argInput == "-startlevel") {
+            istringstream iss(argv[++i]);
+            iss >> startLevel;
+        }
     }
-    
-    
+    // need to pass textMode, scriptFile, startLevel, seed(?) to readConsole
     return 0;
 }
