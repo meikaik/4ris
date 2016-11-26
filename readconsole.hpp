@@ -20,9 +20,11 @@ class ReadConsole {
     Game *currGame;
     Score *gameScore;
     int startLevel;
+    std::string scriptFile;
+    bool textMode;
     std::vector<std::string> commandList {"left", "right", "down", "clockwise", "counterclockwise", "drop", "levelup", "leveldown", "norandom", "sequence", "I", "J", "L", "O", "S", "Z", "T", "restart", "hint"};
 public:
-    ReadConsole(Score*, int);
+    ReadConsole(Score*, int, std::string, bool);
     ~ReadConsole();
     void startRead(std::string*);
     void sequence(std::string);

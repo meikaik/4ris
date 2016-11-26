@@ -11,6 +11,7 @@
 #include <sstream>
 #include <string>
 #include "readconsole.hpp"
+#include "score.hpp"
 using namespace std;
 
 int main(int argc, const char *argv[]) {
@@ -36,6 +37,8 @@ int main(int argc, const char *argv[]) {
             iss >> startLevel;
         }
     }
-    // need to pass textMode, scriptFile, startLevel, seed(?) to readConsole
+    // need to pass seed(?) to readConsole
+    Score *indefiniteScore = new Score();
+    ReadConsole(indefiniteScore, startLevel, scriptFile, textMode);
     return 0;
 }
