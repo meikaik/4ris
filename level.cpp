@@ -23,6 +23,7 @@ void Level::setLevel(int levelVal) {
     
     if (levelVal == 0){
         dropNewBlock = false;
+        isRandom = false;
     }
     else if (levelVal == 1) {
         float temp[7] = { 1/6, 1/6, 1/6, 1/6, 1/12, 1/12, 1/16};
@@ -51,6 +52,11 @@ void Level::setLevel(int levelVal) {
         setNewBlock('*', 5);
     }
     
+    //Check to see if level is not 0
+    if (levelVal != 0){
+        isRandom = true;
+    }
+    
 }
                     
 void Level::setNewBlock(char blockType, int freq) {
@@ -63,4 +69,14 @@ void Level::increase() {
 }
 void Level::decrease() {
     setLevel(levelNumber - 1);
+}
+
+void Level::random(bool ranVal){
+    //Set Random value in level
+    isRandom = ranVal;
+}
+
+bool Level::ranState() {
+    //Return random state
+    return isRandom;
 }
