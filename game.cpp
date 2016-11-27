@@ -31,8 +31,7 @@ void Game::replaceBlock(char block) {
     theBoard.replaceBlock(block);
 }
 void Game::hint() {
-    Position pos;
-    pos = theBoard.hint();
+    Position pos = theBoard.hint();
     if (!(outType)) {
         gDisplay.updateBoard(&theBoard);
         gDisplay.printHint(&pos);
