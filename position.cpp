@@ -50,11 +50,6 @@ Position::Position(char bType) : rotateDegree(0), origin(1,1){
         currPosition.insert(currPosition.end(), temp, temp + 4);
     }
 }
-Position::Position(Position &other): origin (1,1){
-    //Copy private values
-    currPosition = other.currPosition;
-    rotateDegree = other.rotateDegree;
-}
 
 void Position::translate (int dir){
     int x = 0, y = 0, translateY = 0, translateX = 0;
@@ -62,18 +57,18 @@ void Position::translate (int dir){
     //Determine translate direction
     if (dir == 1) {
         //North
-        translateY = -1;
+        translateX = -1;
     }
     else if (dir == 2){
         //East
-        translateX = 1;
+        translateY = 1;
     }
     else if (dir == 3){
         //South
-        translateY = 1;
+        translateX = 1;
     }
     else {
-        translateX = -1;
+        translateY = -1;
     }
     
     //Move each coordinate
@@ -157,3 +152,15 @@ bool Position::deleteCell(Coordinates cell){
 int Position::getRotate() {return rotateDegree;}
 
 vector<Coordinates> Position::getPosition() {return currPosition;}
+
+Position::Position(const Position &other) : origin(other.origin){
+    currPosition = other.currPosition;
+    rotateDegree = other.rotateDegree;
+}
+
+Position & Position::operator=(const Position &other){
+    currPosition = other.currPosition;
+    origin  = other.origin;
+    rotateDegree = other.rotateDegree;
+    return *this;
+}

@@ -26,7 +26,7 @@ public:
     void setLevel(int level);
     void replaceBlock(char block);
     void moveLeft();
-    Position hint(char block);
+    Position hint();
     void moveRight();
     void moveDown();
     void drop();
@@ -43,6 +43,9 @@ public:
     void newNextBlock(std::string *blockStr);
     void clearNext();
     std::string getBlockList();
+    int moveSinceClear;
+    Score * returnGameScore();
+    
     
 private:
     std::vector<std::vector<char>> grid ;
@@ -51,7 +54,8 @@ private:
     Score * gameScore;
     int countSinceClear;
     std::vector<Block> blockList;
-    bool isRandom = false; 
+    bool isRandom = false;
+    
 };
 
 #endif /* board_hpp */

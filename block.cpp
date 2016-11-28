@@ -7,9 +7,12 @@
 //
 
 #include "block.hpp"
+
+
+
 using namespace std;
 
-Block::Block (char bType) : currPosition(bType), oldPosition(bType) {}
+Block::Block (char bType) : currPosition(bType), oldPosition(bType), bType(bType) {}
 
 vector<Coordinates> Block::getPos(){
     return currPosition.getPosition();
@@ -54,3 +57,15 @@ void Block::setLevel(int level){
 }
 
 int Block::getLevel(){return levelNum;}
+
+Block::Block (const Block &other) : currPosition(other.currPosition), oldPosition(other.oldPosition),
+bType(other.bType), levelNum(other.levelNum){}
+
+Block & Block::operator=(const Block &other){
+    //Copy constant values
+    this->oldPosition = other.oldPosition;
+    this->currPosition = other.currPosition;
+    this->levelNum = other.levelNum;
+    this->bType = other.bType;
+    return *this;
+}

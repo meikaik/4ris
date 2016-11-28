@@ -12,14 +12,42 @@
 #include <iostream>
 #include <string>
 #include "level.hpp"
+#include "score.hpp"
+#include "board.hpp"
+//#include "display.hpp"
+#include "position.hpp"
 
-class Score;
+
+class Display {
+protected:
+    Board *currBoard;
+    
+public:
+    Display(Board *);
+    virtual void draw() = 0;
+    virtual void drawScore() = 0;
+    virtual void drawNext() = 0;
+    virtual void drawGrid() = 0;
+    virtual void drawLevel() = 0;
+};
+
+
+class TextDisplay : public Display {
+    public :
+    TextDisplay(Board *);
+    void draw() override;
+    void drawScore() override;
+    void drawNext() override;
+    void drawGrid() override;
+    void drawLevel() override;
+};
+
 
 class Game {
     Level level;
     Board theBoard;
     TextDisplay tDisplay;
-    GraphicsDisplay gDisplay;
+    //GraphicsDisplay gDisplay;
     bool graphics;
     Score *gameScore;
     bool outType;
@@ -35,6 +63,8 @@ public:
     void makeRandom(std::string *, bool);
     
 };
+
+
 
 
 #endif /* game_hpp */

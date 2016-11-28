@@ -13,7 +13,7 @@ using namespace std;
 
 Board::Board(Score * gameScore, Level * levelInfo) : gameScore(gameScore), levelInfo(levelInfo){
     
-    //Create a 11 x 15 grid
+    //Create a 11 x 15 g	rid
     for (int i = 0; i < 15; i++){
         //Create a row
         grid.emplace_back(vector<char>());
@@ -32,7 +32,7 @@ void Board::setLevel(int level){
     levelInfo->setLevel(level);
 }
 
-void Board::replaceBlock(char block){
+void Board::replaceBlock(char nblock){
     int rotateVal;
     
     //Get center of current block
@@ -40,7 +40,7 @@ void Board::replaceBlock(char block){
     
     //Destroy current block and emplace a new one
     nextBlockList.pop_back();
-    nextBlockList.emplace_back(Block(block));
+    nextBlockList.emplace_back(Block(nblock));
     
     //Rotate new block
     nextBlockList.back().setCenter(rotateVal);
@@ -73,11 +73,13 @@ bool Board::checkValidPos(){
     
     return true;
 }
-/*
-Position Board::hint(char block){
-    
 
-} */
+Position Board::hint(){
+    
+    Position temp('I');
+    
+    return temp;
+}
 
 void Board::translateBlock(int dir){
     //Translate current block in specified direction
@@ -132,8 +134,11 @@ void Board::drop(){
     nextBlockList.back().setLevel(levelInfo->getLevel());
     
     //Destroy next block and add block to block list
-    blockList.emplace_back(Block{nextBlockList.back()});
+    blockList.emplace_back(Block(nextBlockList.back()));
     nextBlockList.pop_back();
+    
+    //Check rows for filled rows
+    checkRows();
     
     //Regen list if random mode is true
     if (isRandom && nextBlockList.size() == 0){
@@ -172,7 +177,7 @@ void Board::deleteCells(int rowNum){
                 
                 //Increase score
                 gameScore->increaseScore((tempInt + 1) * (tempInt + 1));
-                
+
                 //Erase block from list
                 blockList.erase(blockList.begin() + j);
             }
@@ -186,7 +191,7 @@ void Board::checkRows(){
     int newScore  = 0;
     
     //Loop through rows to check for completness
-    for (int i = 14; i >= 0; i++){
+    for (int i = 14; i >= 0; i--){
         //Loop through columns to check for spaces
         for (int j = 0; j < 11; j++ ){
             if (grid[i][j] == ' '){
@@ -214,6 +219,7 @@ void Board::checkRows(){
 }
 
 void Board::clearRow(int rowNum){
+    moveSinceClear = 0;
     //Erase conflictling row
     grid.erase(grid.begin() + rowNum);
     
@@ -228,7 +234,7 @@ void Board::clearRow(int rowNum){
 
 void Board::newNextBlock(string *blockStr){
     //Add new block to next block list
-    nextBlockList.emplace_back(Block((*blockStr)[0]));
+    nextBlockList.insert(nextBlockList.begin(), Block((*blockStr)[0]));
     nextBlockList.back().setLevel(levelInfo->getLevel());
 }
 
@@ -271,7 +277,7 @@ string Board::getBlockList(){
     
     //Loop through grid
     for (int i = 0; i < 15; i++){
-        for (int j = 0; j < 15; j++){
+        for (int j = 0; j < 11; j++){
             //Add character to string
             gridStr = gridStr + grid[i][j];
         }
@@ -291,4 +297,9 @@ string Board::getBlockList(){
     }
 
     return gridStr;
+}
+
+Score * Board::returnGameScore(){
+    //Return Game Score
+    return gameScore;
 }

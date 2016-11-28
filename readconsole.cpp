@@ -8,8 +8,7 @@
 
 #include "readconsole.hpp"
 #include <fstream>
-#include "game.hpp"
-#include "score.hpp"
+
 using namespace std;
 
 ReadConsole::ReadConsole(Score *gameScore, int startLevel, string scriptFile, bool textMode): gameScore{gameScore}, startLevel(startLevel),  scriptFile{scriptFile}, textMode{textMode} {
@@ -40,48 +39,44 @@ void ReadConsole::startRead(string *file) {
             }
         }
         
-        switch(pos) {
-            case 1:
-            case 2:
-            case 3:
-            case 4:
-            case 5:
-            case 6:
-                move(pos);
-                break;
-            case 7:
-                levelAction(true);
-                break;
-            case 8:
-                levelAction(false);
-                break;
-            case 9:
-                cin >> tmp;
-                noRandom(tmp);
-                break;
-            case 10:
-                cin >> tmp;
-                sequence(tmp);
-                break;
-            case 11:
-            case 12:
-            case 13:
-            case 14:
-            case 15:
-            case 16:
-            case 17:
-                replaceBlock(s[0]);
-                break;
-            case 18:
-                restart();
-                break;
-            case 19:
-                hint();
-                break;
-            default:
-                cout << "Invalid command" << endl;
-                break;
+        if (pos < 6){
+            move(pos);
         }
+        else if( pos == 6){
+            levelAction(true);
+            break;
+        }
+        else if (pos == 7){
+            levelAction(false);
+            break;
+        }
+        else if (pos == 8){
+            cin >> tmp;
+            noRandom(tmp);
+            break;
+        }
+        else if (pos == 9){
+            cin >> tmp;
+            sequence(tmp);
+            break;
+        }
+        else if (pos < 17 && pos >= 10){
+            replaceBlock(s[0]);
+            break;
+        }
+        else if (pos == 17){
+            restart();
+            break;
+        }
+        else if (pos == 18) {
+            hint();
+            break;
+        }
+        else {
+            cout << "Invalid command" << endl;
+            break;
+        }
+    
     }
 }
 

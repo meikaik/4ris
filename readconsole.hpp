@@ -12,9 +12,8 @@
 #include <iostream>
 #include <string>
 #include <vector>
-
-class Game;
-class Score;
+#include "game.hpp"
+#include "score.hpp"
 
 class ReadConsole {
     Game *currGame;

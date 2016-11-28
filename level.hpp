@@ -23,9 +23,12 @@ class Level {
     int countTillNewBlock;
     int levelNumber;
     int numBlocks;
-    bool isRandom; 
+    bool isRandom;
 
     public:
+    char returnBlockType();
+    int returnCountTillNew();
+    int getWeight();
     Level(int);
     void setWeight(int);
     void setLevel(int);

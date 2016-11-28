@@ -9,6 +9,9 @@
 #ifndef display_hpp
 #define display_hpp
 
-#include <stdio.h>
+#include <iostream>
+#include <string>
+//#include "board.hpp"
+
 
 #endif /* display_hpp */

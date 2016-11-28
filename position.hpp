@@ -30,8 +30,10 @@ class Position {
     
     public :
     Position(char bType);
-    Position(Position &other);
-    Position &operator=(Position &other);
+    Position(Position &other) = default;
+    Position(const Position &other);
+    Position &operator=(Position &other) = default;
+    Position &operator=(const Position &other);
     std::vector<Coordinates> getPosition ();
     void translate (int dir);
     void rotate(int degree);

@@ -11,14 +11,18 @@
 
 #include <iostream>
 #include <vector>
+
 #include "position.hpp"
 #include "level.hpp"
-
 
 class Block {
     
 public:
     Block (char bType);
+    Block (Block &other) = default;
+    Block (const Block &other);
+    Block &operator=(Block &other) = default;
+    Block &operator=(const Block &other);
     std::vector<Coordinates> getPos();
     void translate(int dir);
     void rotateBlock(int degree);

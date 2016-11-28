@@ -84,3 +84,12 @@ bool Level::ranState() {
 int Level::getLevel(){
     return levelNumber;
 }
+int Level::getWeight() {
+    return weight;
+}
+char Level::returnBlockType() {
+    return newBlockType;
+}
+int Level::returnCountTillNew() {
+    return countTillNewBlock;
+}
