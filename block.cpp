@@ -48,3 +48,9 @@ int Block::getCenter(){
     //Get rotatation value based on center
     return currPosition.getRotate();
 }
+
+void Block::setLevel(int level){
+    levelNum = level;
+}
+
+int Block::getLevel(){return levelNum;}

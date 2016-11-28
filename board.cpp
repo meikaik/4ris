@@ -8,6 +8,7 @@
 
 #include "board.hpp"
 
+
 using namespace std;
 
 Board::Board(Score * gameScore, Level * levelInfo) : gameScore(gameScore), levelInfo(levelInfo){
@@ -43,6 +44,7 @@ void Board::replaceBlock(char block){
     
     //Rotate new block
     nextBlockList.back().setCenter(rotateVal);
+    nextBlockList.back().setLevel(levelInfo->getLevel());
 }
 
 bool Board::checkValidPos(){
@@ -71,11 +73,11 @@ bool Board::checkValidPos(){
     
     return true;
 }
-
+/*
 Position Board::hint(char block){
     
 
-}
+} */
 
 void Board::translateBlock(int dir){
     //Translate current block in specified direction
@@ -151,16 +153,40 @@ void Board::rotate(int degree){
 void Board::dropNewBlock(char block){
     //Create a new block
     nextBlockList.emplace_back(Block(block));
+    nextBlockList.back().setLevel(levelInfo->getLevel());
     
     //Drop new block
     drop();
 }
 
+void Board::deleteCells(int rowNum){
+    int tempInt;
+    
+    //Loop through all cells in row
+    for (int i = 0; i < 11; i++){
+        //Loop through all blocks
+        for (int j = 0; j < blockList.size(); j++){
+            //Delete cell and check if block is deleted
+            if (blockList[i].deleteCell(Coordinates(rowNum, i))){
+                tempInt = blockList[i].getLevel();
+                
+                //Increase score
+                gameScore->increaseScore((tempInt + 1) * (tempInt + 1));
+                
+                //Erase block from list
+                blockList.erase(blockList.begin() + j);
+            }
+        }
+    }
+}
+
 void Board::checkRows(){
     bool clear = false;
+    int count = 0;
+    int newScore  = 0;
     
     //Loop through rows to check for completness
-    for (int i = 0; i < 15; i++){
+    for (int i = 14; i >= 0; i++){
         //Loop through columns to check for spaces
         for (int j = 0; j < 11; j++ ){
             if (grid[i][j] == ' '){
@@ -174,9 +200,17 @@ void Board::checkRows(){
         //Clear row if clear is true
         if (clear) clearRow(i);
         
+        //Increment Row count
+        count ++;
+        
         //Reset clear variable to avoid undefined behaviour
         clear = false;
     }
+    
+    //Increment score
+    
+    newScore = levelInfo->getLevel() + count;
+    gameScore->increaseScore(newScore * newScore);
 }
 
 void Board::clearRow(int rowNum){
@@ -184,17 +218,18 @@ void Board::clearRow(int rowNum){
     grid.erase(grid.begin() + rowNum);
     
     //Add new empty row
-    grid.emplace_back(vector<char>());
+    grid.insert(grid.begin(), vector<char>());
     
     //Populate last row with spaces
     for (int i = 0; i < 11; i++){
-        grid[14].emplace_back(' ');
+        grid[0].emplace_back(' ');
     }
 }
 
 void Board::newNextBlock(string *blockStr){
     //Add new block to next block list
     nextBlockList.emplace_back(Block((*blockStr)[0]));
+    nextBlockList.back().setLevel(levelInfo->getLevel());
 }
 
 void Board::clearNext() {

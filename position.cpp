@@ -100,7 +100,7 @@ void Position::rotate(int degree){
     
     //Calculate Rotate degree
     if (degree == 90){
-        rDegree = -1 * ((2 * PI) - (PI / 2));
+        rDegree = -1 * (PI / 2);
     }
     else {
         rDegree = PI / 2;
@@ -128,6 +128,10 @@ void Position::rotate(int degree){
         //Shift values back to orginal position
         x += origin.getX();
         y += origin.getY();
+        
+        //Set Values
+        currPosition[i].setX(x);
+        currPosition[i].setY(y);
     }
 }
 

@@ -19,7 +19,6 @@ class Block {
     
 public:
     Block (char bType);
-    Block (Block &other);
     std::vector<Coordinates> getPos();
     void translate(int dir);
     void rotateBlock(int degree);
@@ -27,6 +26,7 @@ public:
     bool deleteCell(Coordinates x);
     void setCenter(int val);
     void setLevel(int level);
+    int getLevel();
     char type();
     int getCenter();
     

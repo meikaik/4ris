@@ -39,6 +39,9 @@ int main(int argc, const char *argv[]) {
     }
     // need to pass seed(?) to readConsole
     Score *indefiniteScore = new Score();
-    ReadConsole(indefiniteScore, startLevel, scriptFile, textMode);
+    ReadConsole rc (indefiniteScore, startLevel, scriptFile, textMode);
+    rc.startRead(nullptr);
     return 0;
 }
+
+

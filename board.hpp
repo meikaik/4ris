@@ -33,6 +33,7 @@ public:
     void rotate(int degree);
     void dropNewBlock(char block);
     void checkRows();
+    void deleteCells(int rowNum);
     void clearRow(int rowNum);
     void random(bool randomVal);
     void genNewList();
