@@ -32,17 +32,17 @@ void Board::setLevel(int level){
 }
 
 void Board::replaceBlock(char block){
-    Coordinates center;
+    int rotateVal;
     
     //Get center of current block
-    center = nextBlockList.back().getCenter();
+    rotateVal = nextBlockList.back().getCenter();
     
     //Destroy current block and emplace a new one
     nextBlockList.pop_back();
     nextBlockList.emplace_back(Block(block));
     
-    //Set center of new block
-    nextBlockList.back().setCenter(center);
+    //Rotate new block
+    nextBlockList.back().setCenter(rotateVal);
 }
 
 bool Board::checkValidPos(){
@@ -74,8 +74,7 @@ bool Board::checkValidPos(){
 
 Position Board::hint(char block){
     
-    
-    return Position();
+
 }
 
 void Board::translateBlock(int dir){

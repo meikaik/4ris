@@ -24,16 +24,16 @@ public:
     void translate(int dir);
     void rotateBlock(int degree);
     void restoreOldPosition();
-    void deleteCell(Coordinates x);
-    void setCenter(Coordinates x);
+    bool deleteCell(Coordinates x);
+    void setCenter(int val);
     void setLevel(int level);
     char type();
-    Coordinates getCenter();
+    int getCenter();
     
 protected:
     char bType;
-    Position *oldPosition;
-    Position *currPosition;
+    Position oldPosition;
+    Position currPosition;
     int levelNum;
 };
 

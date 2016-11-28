@@ -22,7 +22,6 @@ class Level {
     char newBlockType;
     int countTillNewBlock;
     int levelNumber;
-    Coordinates blockPos;
     int numBlocks;
     bool isRandom; 
 

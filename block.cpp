@@ -9,33 +9,42 @@
 #include "block.hpp"
 using namespace std;
 
-Block::Block (char bType){
-    
-}
-Block::Block(Block &other){
-    
-}
+Block::Block (char bType) : currPosition(bType), oldPosition(bType) {}
+
 vector<Coordinates> Block::getPos(){
-    return currPosition->getPosition();
+    return currPosition.getPosition();
 }
 void Block::translate(int dir){
-    int x, y, translateX, translateY;
+    //Make backup of current position
+    oldPosition = currPosition;
+    
+    //Translate Block
+    currPosition.translate(dir);
 }
 void Block::rotateBlock(int degree){
+    //Make backup of current position
+    oldPosition = currPosition;
     
+    //Rotate Block
+    currPosition.rotate(degree);
 }
+
 void Block::restoreOldPosition(){
-    
+    //Restore old position from backup
+    currPosition = oldPosition;
 }
-void Block::deleteCell(Coordinates x){
-    
+
+bool Block::deleteCell(Coordinates x){
+    return currPosition.deleteCell(x);
 }
-void Block::setCenter(Coordinates x){
-    
+
+void Block::setCenter(int val) {
+    currPosition.rotate(val);
 }
-char Block::type(){
-    
-}
-Coordinates getCenter(){
-    
+
+char Block::type(){ return bType;}
+
+int Block::getCenter(){
+    //Get rotatation value based on center
+    return currPosition.getRotate();
 }
