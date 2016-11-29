@@ -49,12 +49,12 @@ Position::Position(char bType) : rotateDegree(0), origin(1.0f,1.0f){
     else if (bType == 'O'){
         Coordinates temp[4] = {{0,1}, {0,2}, {1,1}, {1,2}};
         currPosition.insert(currPosition.end(), temp, temp + 4);
-        origin.setX2(1.5f);
+        //origin.setX2(1.5f);
     }
     else if (bType == 'I'){
         Coordinates temp[4] = {{1,0}, {1,1}, {1,2}, {1,3}};
         currPosition.insert(currPosition.end(), temp, temp + 4);
-        origin.setX2(1.5f);
+        //origin.setX2(1.5f);
     }
 }
 
@@ -96,7 +96,7 @@ void Position::translate (int dir){
 void Position::rotate(int degree){
     float x, y;
     float calcX, calcY, rDegree;
-    int finalX, finalY;
+    
     
     //Calculate Rotate degree
     if (degree == 90){
@@ -132,8 +132,7 @@ void Position::rotate(int degree){
         //Shift values back to orginal position
         x = x + origin.getX2();
         y = y + origin.getY2();
-        
-        
+       
         //Set Values
         currPosition[i].setX(x);
         currPosition[i].setY(y);

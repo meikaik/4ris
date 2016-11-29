@@ -12,6 +12,8 @@
 using namespace std;
 
 ReadConsole::ReadConsole(Score *gameScore, int startLevel, string scriptFile, bool textMode): gameScore{gameScore}, startLevel(startLevel),  scriptFile{scriptFile}, textMode{textMode} {
+    cout << "Quadris v0.01 - By : Harsh, Meikai, and Karam" << endl;
+    cout << "Enter commands or type 'help' for a list of commands" << endl;
     startGame();
 }
 
@@ -25,8 +27,7 @@ void ReadConsole::startRead(string *file) {
     string s;
     int pos = 0;
     
-    cout << "Quadris v0.01 - By : Harsh, Meikai, and Karam" << endl;
-    cout << "Enter commands or type 'help' for a list of commands" << endl;
+  
     
     while(true) {
         
@@ -94,6 +95,8 @@ void ReadConsole::sequence(string file) {
     while (blocks >> blockString){
         currGame->makeRandom(&blockString, false);
     }
+    
+    currGame->draw();
 }
 void ReadConsole::random() {
     currGame->makeRandom(nullptr, true);

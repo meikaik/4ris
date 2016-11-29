@@ -28,6 +28,9 @@ void Block::rotateBlock(int degree){
     //Make backup of current position
     oldPosition = currPosition;
     
+    //Stop if block type is O
+    if (bType == 'O') return;
+    
     //Rotate Block
     currPosition.rotate(degree);
 }

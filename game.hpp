@@ -31,6 +31,7 @@ class Game {
 public:
     Game(Score *);
     ~Game();
+    void draw();
     void start(std::string, bool, int);
     void levelUp();
     void levelDown();

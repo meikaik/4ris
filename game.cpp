@@ -39,6 +39,11 @@ void Game::hint() {
     //tDisplay.updateBoard(&theBoard);
     //tDisplay.printHint(&pos);
 }
+
+void Game::draw(){
+    //Draw game
+    tDisplay.draw();
+}
  
 void Game::makeMove(char moveVal) {
     if (theBoard.moveSinceClear == level.returnCountTillNew()) {
@@ -67,14 +72,15 @@ void Game::makeMove(char moveVal) {
         default:
             break;
     }
-    if (moveVal != 5) {
+    if ((moveVal != 5) && ((level.getLevel() == 3) || (level.getLevel() == 4))) {
         for (int i=0; i<level.getWeight(); i++) {
             theBoard.moveDown();
         }
     }
     
     //Draw
-    if (moveVal < 6) tDisplay.draw();
+    draw();
+    
 }
 
 
