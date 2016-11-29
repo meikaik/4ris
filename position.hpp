@@ -14,13 +14,20 @@
 
 class Coordinates {
     int x = 0, y = 0;
+    float x2, y2;
     
     public :
     Coordinates (int x, int y);
+    Coordinates (float x, float y);
     int getX();
     int getY();
     void setX(int xNew);
     void setY(int yNew);
+    float getX2();
+    float getY2();
+    void setX2(float xNew);
+    void setY2(float yNew);
+
 };
 
 class Position {

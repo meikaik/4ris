@@ -8,7 +8,6 @@
 
 #include "position.hpp"
 #include <math.h>
-#define PI 3.14159265
 
 using namespace std;
 
@@ -87,18 +86,15 @@ void Position::translate (int dir){
     origin.setY(origin.getY() + translateY);
 }
 void Position::rotate(int degree){
-    int x, y, x2, y2;
-    float rDegree;
-    
-    //Increment rotate counter
-    rotateDegree += degree;
+    int x, y;
+    float calcX, calcY, rDegree;
     
     //Calculate Rotate degree
     if (degree == 90){
-        rDegree = -1 * (PI / 2);
+        rDegree = -1 * (M_PI / 2);
     }
     else {
-        rDegree = PI / 2;
+        rDegree = M_PI / 2;
     }
     
     //Loop through all coordinates
@@ -111,22 +107,31 @@ void Position::rotate(int degree){
         //Shift values, so block starts at the origin
         x -= origin.getX();
         y -= origin.getY();
+        y *= -1;
 
-        x2 = x;
-        y2 = y;
-        
         //Use Rotation matrix to rotate point counterclockwise
-        x = x2 * cos(rDegree) - y2 * sin(rDegree);
-        y = x2 * sin(rDegree) + y2 * cos(rDegree);
+        calcX = x * cos(rDegree) - y * sin(rDegree);
+        calcY = x * sin(rDegree) + y * cos(rDegree);
+        
+        //Round values to nearest integer and not towards 0
+        x = roundf(calcX);
+        y = roundf(calcY);
+        
+        //Correct inverted y-axis
+        y *= -1;
         
         //Shift values back to orginal position
-        x += origin.getX();
-        y += origin.getY();
-        
+        x = x + origin.getX();
+        y = y + origin.getY();
+    
         //Set Values
         currPosition[i].setX(x);
         currPosition[i].setY(y);
     }
+    
+    //Increment rotate counter
+    rotateDegree += degree;
+    
 }
 
 bool Position::deleteCell(Coordinates cell){
