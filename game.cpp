@@ -95,29 +95,3 @@ void Game::makeRandom(std::string *blockString, bool ran){
 }
 
 
-Display::Display(Board *theBoard): currBoard{theBoard} {}
-
-TextDisplay::TextDisplay (Board *theBoard) : Display(theBoard){}
-
-void TextDisplay::draw() {
-    drawGrid();
-}
-void TextDisplay::drawScore() {
-}
-void TextDisplay::drawNext() {
-}
-void TextDisplay::drawGrid() {
-    string gridString;
-    
-    //Get grid string
-    gridString = currBoard->getBlockList();
-    
-    //Print
-    cout << "___________" << endl;
-    cout << currBoard->returnGameScore()->currentHighScore() << endl;
-    cout << "___________" << endl;
-    cout << gridString;
-    cout << "___________" << endl;
-}
-void TextDisplay::drawLevel() {
-}

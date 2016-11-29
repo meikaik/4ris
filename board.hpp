@@ -39,12 +39,14 @@ public:
     void genNewList();
     void translateBlock(int dir);
     bool getGenState();
+    int getLevel();
     bool checkValidPos();
     void newNextBlock(std::string *blockStr);
     void clearNext();
     std::string getBlockList();
     int moveSinceClear;
     Score * returnGameScore();
+    char getNextBlock();
     
     
 private:

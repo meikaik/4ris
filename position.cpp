@@ -111,14 +111,13 @@ void Position::rotate(int degree){
         //Shift values, so block starts at the origin
         x -= origin.getX();
         y -= origin.getY();
-        y *= -1;
+
         x2 = x;
         y2 = y;
         
         //Use Rotation matrix to rotate point counterclockwise
         x = x2 * cos(rDegree) - y2 * sin(rDegree);
         y = x2 * sin(rDegree) + y2 * cos(rDegree);
-        y *= -1;
         
         //Shift values back to orginal position
         x += origin.getX();

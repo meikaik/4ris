@@ -25,6 +25,9 @@ void ReadConsole::startRead(string *file) {
     string s;
     int pos = 0;
     
+    cout << "Quadris v0.01 - By : Harsh, Meikai, and Karam" << endl;
+    cout << "Enter commands or type 'help' for a list of commands" << endl;
+    
     while(true) {
         
         
@@ -44,39 +47,43 @@ void ReadConsole::startRead(string *file) {
         }
         else if( pos == 6){
             levelAction(true);
-            break;
         }
         else if (pos == 7){
             levelAction(false);
-            break;
         }
         else if (pos == 8){
             cin >> tmp;
             noRandom(tmp);
-            break;
         }
         else if (pos == 9){
             cin >> tmp;
             sequence(tmp);
-            break;
         }
         else if (pos < 17 && pos >= 10){
             replaceBlock(s[0]);
-            break;
         }
         else if (pos == 17){
             restart();
-            break;
         }
         else if (pos == 18) {
             hint();
-            break;
+        }
+        else if (pos == 19){
+            help();
         }
         else {
             cout << "Invalid command" << endl;
-            break;
         }
+        
+    }
+}
+
+void ReadConsole::help(){
+    //Print command list
+    cout << "Valid Commands Are :" << endl;
     
+    for (int i = 0; i < commandList.size(); i++){
+        cout << i + 1 << ") " << commandList[i] << endl;
     }
 }
 

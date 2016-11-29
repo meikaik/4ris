@@ -14,33 +14,10 @@
 #include "level.hpp"
 #include "score.hpp"
 #include "board.hpp"
-//#include "display.hpp"
+#include "display.hpp"
 #include "position.hpp"
 
 
-class Display {
-protected:
-    Board *currBoard;
-    
-public:
-    Display(Board *);
-    virtual void draw() = 0;
-    virtual void drawScore() = 0;
-    virtual void drawNext() = 0;
-    virtual void drawGrid() = 0;
-    virtual void drawLevel() = 0;
-};
-
-
-class TextDisplay : public Display {
-    public :
-    TextDisplay(Board *);
-    void draw() override;
-    void drawScore() override;
-    void drawNext() override;
-    void drawGrid() override;
-    void drawLevel() override;
-};
 
 
 class Game {

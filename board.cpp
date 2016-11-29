@@ -172,8 +172,9 @@ void Board::deleteCells(int rowNum){
         //Loop through all blocks
         for (int j = 0; j < blockList.size(); j++){
             //Delete cell and check if block is deleted
-            if (blockList[i].deleteCell(Coordinates(rowNum, i))){
-                tempInt = blockList[i].getLevel();
+            if (blockList[j].deleteCell(Coordinates(rowNum, i))){
+                //Get level block was placed on
+                tempInt = blockList[j].getLevel();
                 
                 //Increase score
                 gameScore->increaseScore((tempInt + 1) * (tempInt + 1));
@@ -203,19 +204,26 @@ void Board::checkRows(){
         }
         
         //Clear row if clear is true
-        if (clear) clearRow(i);
-        
-        //Increment Row count
-        count ++;
+        if (clear) {
+            //Delete row
+            clearRow(i);
+            
+            //Delete Cells
+            deleteCells(i);
+            
+            //Increment Row count
+            count ++;
+        }
         
         //Reset clear variable to avoid undefined behaviour
         clear = false;
     }
     
     //Increment score
-    
-    newScore = levelInfo->getLevel() + count;
-    gameScore->increaseScore(newScore * newScore);
+    if (count > 0){
+        newScore = levelInfo->getLevel() + count;
+        gameScore->increaseScore(newScore * newScore);
+    }
 }
 
 void Board::clearRow(int rowNum){
@@ -302,4 +310,14 @@ string Board::getBlockList(){
 Score * Board::returnGameScore(){
     //Return Game Score
     return gameScore;
+}
+
+int Board::getLevel(){
+    //Return level
+    return levelInfo->getLevel();
+}
+
+char Board::getNextBlock(){
+    //Return nextblock char
+    return nextBlockList[nextBlockList.size() - 2].type();
 }
