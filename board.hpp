@@ -11,6 +11,7 @@
 
 #include <iostream>
 #include <vector>
+#include <cstdlib>
 #include <string>
 #include "level.hpp"
 #include "position.hpp"
@@ -36,17 +37,21 @@ public:
     void deleteCells(int rowNum);
     void clearRow(int rowNum);
     void random(bool randomVal);
+    char genOneBlock();
     void genNewList();
+    void clearList(); 
     void translateBlock(int dir);
     bool getGenState();
     int getLevel();
     bool checkValidPos();
     void newNextBlock(std::string *blockStr);
     void clearNext();
+    void endGameCheck();
     std::string getBlockList();
     int moveSinceClear;
     Score * returnGameScore();
     char getNextBlock();
+    bool isEmpty ();
     
     
 private:

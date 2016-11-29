@@ -26,26 +26,26 @@ void Level::setLevel(int levelVal) {
         isRandom = false;
     }
     else if (levelVal == 1) {
-        float temp[7] = { 1/6, 1/6, 1/6, 1/6, 1/12, 1/12, 1/16};
+        float temp[7] = { 32, 32, 32, 32, 16, 16, 12};
         probabilities.clear();
         probabilities.insert(probabilities.end(), temp, temp+7);
         dropNewBlock = false;
     }
     else if (levelVal == 2) {
-        float temp[7] = { 1/7, 1/7, 1/7, 1/7, 1/7, 1/7, 1/7};
+        float temp[7] = { 1, 1, 1, 1, 1, 1, 1};
         probabilities.clear();
         probabilities.insert(probabilities.end(), temp, temp+7);
         dropNewBlock = false;
     }
     else if (levelVal == 3) {
-        float temp[7] = { 1/9, 1/9, 1/9, 1/9, 2/9, 2/9, 1/9};
+        float temp[7] = { 1, 1, 1, 1, 2, 2, 1};
         probabilities.clear();
         probabilities.insert(probabilities.end(), temp, temp+7);
         setWeight(1);
         dropNewBlock = false;
     }
     else if (levelVal == 4) {
-        float temp[7] = { 1/9, 1/9, 1/9, 1/9, 2/9, 2/9, 1/9};
+        float temp[7] = { 1, 1, 1, 1, 2, 2, 1};
         probabilities.clear();
         probabilities.insert(probabilities.end(), temp, temp+7);
         setWeight(1);

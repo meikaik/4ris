@@ -16,7 +16,7 @@
 class Level {
 
     // [1] = I, [2] = J, [3] = L, [4] = O, [5] = S, [6] = Z, [7] = T
-    std::vector<float> probabilities;
+
     int weight;
     bool dropNewBlock;
     char newBlockType;
@@ -38,6 +38,8 @@ class Level {
     void random(bool ranVal);
     bool ranState();
     int getLevel();
+    std::vector<float> probabilities;
+    std::vector<char> btypes {'I', 'J', 'L', 'O', 'S', 'Z', 'T'};
 };
 
 #endif /* level_hpp */

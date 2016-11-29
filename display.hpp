@@ -25,6 +25,7 @@ public:
     virtual void drawNext() = 0;
     virtual void drawGrid() = 0;
     virtual void drawLevel() = 0;
+    virtual void drawError(std::string) = 0;
 };
 
 
@@ -40,6 +41,7 @@ class TextDisplay : public Display {
     void drawNext() override;
     void drawGrid() override;
     void drawLevel() override;
+    void drawError(std::string) override;
 };
 
 

@@ -8,6 +8,7 @@
 
 #include "readconsole.hpp"
 #include <fstream>
+#include <stdexcept>
 
 using namespace std;
 
@@ -30,8 +31,6 @@ void ReadConsole::startRead(string *file) {
   
     
     while(true) {
-        
-        
         if (!(cin >> s)){
             break;
         }
@@ -114,15 +113,22 @@ void ReadConsole::replaceBlock(char block) {
 }
 void ReadConsole::restart() {
     delete currGame;
+    startLevel = 0;
     gameScore->resetCurrScore();
     currGame = new Game(gameScore);
     currGame->start("", 0, 0);
+    sequence(scriptFile);
 }
 void ReadConsole::hint() {
     currGame->hint();
 }
 void ReadConsole::move(int moveCommand) {
+    try {
     currGame->makeMove(moveCommand);
+    }
+    catch (...){
+        restart();
+    }
 }
 void ReadConsole::levelAction(bool increase) {
     if (increase) {

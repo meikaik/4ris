@@ -10,12 +10,13 @@
 #include <fstream>
 #include <sstream>
 #include <string>
+#include <cstdlib>
 #include "readconsole.hpp"
 #include "score.hpp"
 using namespace std;
 
 int main(int argc, const char *argv[]) {
-    int seed = 0;
+    int seed = 783478378;
     int startLevel = 0;
     bool textMode = false;
     string scriptFile{"sequence.txt"};
@@ -37,8 +38,10 @@ int main(int argc, const char *argv[]) {
             iss >> startLevel;
         }
     }
-    // need to pass seed(?) to readConsole
+    
+   
     Score *indefiniteScore = new Score();
+    srand(seed);
     ReadConsole rc (indefiniteScore, startLevel, scriptFile, textMode);
     rc.startRead(nullptr);
     return 0;

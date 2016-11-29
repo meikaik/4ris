@@ -7,6 +7,7 @@
 //
 
 #include "board.hpp"
+#include <stdexcept>
 
 
 using namespace std;
@@ -26,6 +27,24 @@ Board::Board(Score * gameScore, Level * levelInfo) : gameScore(gameScore), level
 }
 
 Board::~Board(){}
+
+bool Board::isEmpty() { return nextBlockList.empty();}
+
+void Board::endGameCheck(){
+    //Check if there are no more blocks while mode is non-random
+    if (nextBlockList.empty() && !(levelInfo->ranState())){
+        //Throw game over
+        throw GameOver{"Game Over : No More Blocks!"};
+    }
+    
+    //Check to see if any blocks are in the first row
+    for (int i = 0; i < 11; i++){
+        if (grid[3][i] != ' '){
+            //Throw game over
+            throw GameOver{"Game Over : You Lose!"};
+        }
+    }
+}
 
 void Board::setLevel(int level){
     //Set Level to match given value
@@ -139,12 +158,7 @@ void Board::drop(){
     
     //Check rows for filled rows
     checkRows();
-    
-    //Regen list if random mode is true
-    if (isRandom && nextBlockList.size() == 0){
-        genNewList();
-    }
-    
+
 }
 
 void Board::rotate(int degree){
@@ -178,7 +192,7 @@ void Board::deleteCells(int rowNum){
                 
                 //Increase score
                 gameScore->increaseScore((tempInt + 1) * (tempInt + 1));
-
+                
                 //Erase block from list
                 blockList.erase(blockList.begin() + j);
             }
@@ -243,7 +257,7 @@ void Board::clearRow(int rowNum){
 void Board::newNextBlock(string *blockStr){
     //Add new block to next block list
     nextBlockList.insert(nextBlockList.begin(), Block((*blockStr)[0]));
-    nextBlockList.back().setLevel(levelInfo->getLevel());
+    nextBlockList.front().setLevel(levelInfo->getLevel());
 }
 
 void Board::clearNext() {
@@ -257,7 +271,53 @@ void Board::random(bool randomVal){
     levelInfo->random(isRandom);
 }
 
-void Board::genNewList(){}
+char Board::genOneBlock(){
+    int rVal, index, middle, end = 6, start = 0;
+    vector<int> cdf; //F(X) = sum(f(x))
+    cdf.push_back(levelInfo->probabilities[0]);
+    
+    //Populate cdf vector
+    for (int i = 1; i < 7; i++){
+        cdf.push_back(cdf[i-1] + levelInfo->probabilities[i]);
+    }
+    
+    //Generate random index value
+    rVal = (rand() % cdf[6]) + 1;
+    
+    //Determine character index
+    while (start < end){
+        //Get mean
+        middle = (start + end) / 2;
+        
+        //Determine new start/end indexs
+        if (rVal > cdf[middle]){
+            start = middle + 1;
+        }
+        else {
+            end = middle;
+        }
+    }
+    
+    //Sssign start position to index
+    index = start;
+    
+    //Return char
+    return levelInfo->btypes[index];
+}
+
+void Board::genNewList(){
+    char ranBlock;
+
+    for (int i = 0; i < 20; i++){
+    
+        //Get random block type
+        ranBlock = genOneBlock();
+        
+        //Add new block to next block list
+        nextBlockList.insert(nextBlockList.begin(), Block(ranBlock));
+        nextBlockList.front().setLevel(levelInfo->getLevel());
+    }
+}
 
 bool Board::getGenState(){
     //Return current randomize state
@@ -303,7 +363,7 @@ string Board::getBlockList(){
         //Set values on grid
         grid[x][y] = ' ';
     }
-
+    
     return gridStr;
 }
 
@@ -320,4 +380,9 @@ int Board::getLevel(){
 char Board::getNextBlock(){
     //Return nextblock char
     return nextBlockList[nextBlockList.size() - 2].type();
+}
+
+void Board::clearList(){
+    //Clear nextblocks
+    nextBlockList.clear();
 }

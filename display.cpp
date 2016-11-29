@@ -85,3 +85,9 @@ void TextDisplay::drawLevel() {
     cout << "Level:" << setw(7) << currBoard->getLevel() << endl;
 }
 
+void TextDisplay::drawError(string err){
+    //Print error in bold red letters
+    cout << err << endl;
+    cout << "Restarting Game ...." << endl;
+}
+

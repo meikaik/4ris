@@ -10,6 +10,11 @@
 #define score_hpp
 
 #include <iostream>
+#include <string>
+
+struct GameOver {
+    std::string msg;
+};
 
 class Score {
     int currScore = 0, highScore = 0;

@@ -7,6 +7,7 @@
 //
 
 #include "game.hpp"
+#include <stdexcept>
 
 using namespace std;
 
@@ -21,11 +22,29 @@ void Game::start(string file, bool isTextOnly, int startLevel) {
     outType = isTextOnly;
     this->level.setLevel(startLevel);
 }
+
 void Game::levelUp() {
     level.increase();
+    
+    //Clear blocks so new blocks can be generated
+    theBoard.clearList();
+    
+    //Generate new list
+    theBoard.genNewList();
+    
+    //Draw grid
+    draw();
 }
 void Game::levelDown() {
     level.decrease();
+    //Clear blocks so new blocks can be generated
+    theBoard.clearList();
+    
+    //Generate new list
+    theBoard.genNewList();
+    
+    //Draw grid
+    draw();
 }
 void Game::replaceBlock(char block) {
     theBoard.replaceBlock(block);
@@ -44,42 +63,57 @@ void Game::draw(){
     //Draw game
     tDisplay.draw();
 }
- 
+
 void Game::makeMove(char moveVal) {
-    if (theBoard.moveSinceClear == level.returnCountTillNew()) {
-        theBoard.moveSinceClear = 0;
-        theBoard.dropNewBlock(level.returnBlockType());
-    }
-    switch (moveVal) {
-        case 0 :
-            theBoard.moveLeft();
-            break;
-        case 1 :
-            theBoard.moveRight();
-            break;
-        case 2 :
-            theBoard.moveDown();
-            break;
-        case 3 :
-            theBoard.rotate(90);
-            break;
-        case 4 :
-            theBoard.rotate(-90);
-            break;
-        case 5 :
-            theBoard.drop();
-            break;
-        default:
-            break;
-    }
-    if ((moveVal != 5) && ((level.getLevel() == 3) || (level.getLevel() == 4))) {
-        for (int i=0; i<level.getWeight(); i++) {
-            theBoard.moveDown();
+    try {
+        if (theBoard.moveSinceClear == level.returnCountTillNew()) {
+            theBoard.moveSinceClear = 0;
+            theBoard.dropNewBlock(level.returnBlockType());
         }
-    }
+        
+        //Generate random blocks
+        //Regen list if random mode is true
+        if (level.ranState() && theBoard.isEmpty()){
+            theBoard.genNewList();
+        }
+        
+        switch (moveVal) {
+            case 0 :
+                theBoard.moveLeft();
+                break;
+            case 1 :
+                theBoard.moveRight();
+                break;
+            case 2 :
+                theBoard.moveDown();
+                break;
+            case 3 :
+                theBoard.rotate(90);
+                break;
+            case 4 :
+                theBoard.rotate(-90);
+                break;
+            case 5 :
+                theBoard.drop();
+                break;
+            default:
+                break;
+        }
+        if ((moveVal != 5) && ((level.getLevel() == 3) || (level.getLevel() == 4))) {
+            for (int i=0; i<level.getWeight(); i++) {
+                theBoard.moveDown();
+            }
+        }
     
-    //Draw
-    draw();
+        //Draw
+        draw();
+        
+        theBoard.endGameCheck();
+    }
+    catch (GameOver err){
+        tDisplay.drawError(err.msg);
+        throw;
+    }
     
 }
 
