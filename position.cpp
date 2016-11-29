@@ -12,13 +12,19 @@
 using namespace std;
 
 Coordinates::Coordinates(int x, int y): x{x}, y{y}{}
+Coordinates::Coordinates(float x, float y): x2{x}, y2{y}{}
+
 int Coordinates::getX() { return x;}
 int Coordinates::getY() { return y;}
 void Coordinates::setX(int xNew){ x = xNew;}
 void Coordinates::setY(int yNew){ y = yNew;}
+float Coordinates::getX2() { return  x2;}
+float Coordinates::getY2() { return y2;}
+void Coordinates::setX2(float xNew) { x2 = xNew;}
+void Coordinates::setY2(float yNew) { y2 = yNew;}
 
 
-Position::Position(char bType) : rotateDegree(0), origin(1,1){
+Position::Position(char bType) : rotateDegree(0), origin(1.0f,1.0f){
     //Set Position Values
     if (bType == 'J'){
         Coordinates temp[4] = {{0,0}, {1,0}, {1,1}, {1,2}};
@@ -43,10 +49,12 @@ Position::Position(char bType) : rotateDegree(0), origin(1,1){
     else if (bType == 'O'){
         Coordinates temp[4] = {{0,1}, {0,2}, {1,1}, {1,2}};
         currPosition.insert(currPosition.end(), temp, temp + 4);
+        origin.setX2(1.5f);
     }
     else if (bType == 'I'){
         Coordinates temp[4] = {{1,0}, {1,1}, {1,2}, {1,3}};
         currPosition.insert(currPosition.end(), temp, temp + 4);
+        origin.setX2(1.5f);
     }
 }
 
@@ -82,12 +90,13 @@ void Position::translate (int dir){
     }
     
     //Translate the Origin
-    origin.setX(origin.getX() + translateX);
-    origin.setY(origin.getY() + translateY);
+    origin.setX2(origin.getX2() + translateX);
+    origin.setY2(origin.getY2() + translateY);
 }
 void Position::rotate(int degree){
-    int x, y;
+    float x, y;
     float calcX, calcY, rDegree;
+    int finalX, finalY;
     
     //Calculate Rotate degree
     if (degree == 90){
@@ -105,8 +114,8 @@ void Position::rotate(int degree){
         y = currPosition[i].getY();
         
         //Shift values, so block starts at the origin
-        x -= origin.getX();
-        y -= origin.getY();
+        x -= origin.getX2();
+        y -= origin.getY2();
         y *= -1;
 
         //Use Rotation matrix to rotate point counterclockwise
@@ -121,9 +130,10 @@ void Position::rotate(int degree){
         y *= -1;
         
         //Shift values back to orginal position
-        x = x + origin.getX();
-        y = y + origin.getY();
-    
+        x = x + origin.getX2();
+        y = y + origin.getY2();
+        
+        
         //Set Values
         currPosition[i].setX(x);
         currPosition[i].setY(y);
