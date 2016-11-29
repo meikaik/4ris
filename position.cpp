@@ -24,37 +24,37 @@ void Coordinates::setX2(float xNew) { x2 = xNew;}
 void Coordinates::setY2(float yNew) { y2 = yNew;}
 
 
-Position::Position(char bType) : rotateDegree(0), origin(1.0f,1.0f){
+Position::Position(char bType) : rotateDegree(0), origin(4.0f,1.0f){
     //Set Position Values
     if (bType == 'J'){
-        Coordinates temp[4] = {{0,0}, {1,0}, {1,1}, {1,2}};
+        Coordinates temp[4] = {{3,0}, {4,0}, {4,1}, {4,2}};
         currPosition.insert(currPosition.end(), temp, temp + 4);
     }
     else if (bType == 'L'){
-        Coordinates temp[4] = {{0,2}, {1,0}, {1,1}, {1,2}};
+        Coordinates temp[4] = {{3,2}, {4,0}, {4,1}, {4,2}};
         currPosition.insert(currPosition.end(), temp, temp + 4);
     }
     else if (bType == 'T'){
-        Coordinates temp[4] = {{0,1}, {1,0}, {1,1}, {1,2}};
+        Coordinates temp[4] = {{3,1}, {4,0}, {4,1}, {4,2}};
         currPosition.insert(currPosition.end(), temp, temp + 4);
     }
     else if (bType == 'S'){
-        Coordinates temp[4] = {{0,1}, {1,0}, {1,1}, {0,2}};
+        Coordinates temp[4] = {{3,1}, {4,0}, {4,1}, {3,2}};
         currPosition.insert(currPosition.end(), temp, temp + 4);
     }
     else if (bType == 'Z'){
-        Coordinates temp[4] = {{0,0}, {0,1}, {1,1}, {1,2}};
+        Coordinates temp[4] = {{3,0}, {3,1}, {4,1}, {4,2}};
         currPosition.insert(currPosition.end(), temp, temp + 4);
     }
     else if (bType == 'O'){
-        Coordinates temp[4] = {{0,1}, {0,2}, {1,1}, {1,2}};
+        Coordinates temp[4] = {{3,1}, {3,2}, {4,1}, {4,2}};
         currPosition.insert(currPosition.end(), temp, temp + 4);
         //origin.setX2(1.5f);
     }
     else if (bType == 'I'){
-        Coordinates temp[4] = {{1,0}, {1,1}, {1,2}, {1,3}};
+        Coordinates temp[4] = {{4,0}, {4,1}, {4,2}, {4,3}};
         currPosition.insert(currPosition.end(), temp, temp + 4);
-        //origin.setX2(1.5f);
+        origin.setX2(4.5f);
     }
 }
 
@@ -100,42 +100,37 @@ void Position::rotate(int degree){
     
     //Calculate Rotate degree
     if (degree == 90){
-        rDegree = -1 * (M_PI / 2);
+        rDegree = 1;
     }
     else {
-        rDegree = M_PI / 2;
+        rDegree = 3;
     }
     
-    //Loop through all coordinates
-    for(int i = 0; i < currPosition.size(); i++){
-        
-        //Get X and Y values
-        x = currPosition[i].getX();
-        y = currPosition[i].getY();
-        
-        //Shift values, so block starts at the origin
-        x -= origin.getX2();
-        y -= origin.getY2();
-        y *= -1;
-
-        //Use Rotation matrix to rotate point counterclockwise
-        calcX = x * cos(rDegree) - y * sin(rDegree);
-        calcY = x * sin(rDegree) + y * cos(rDegree);
-        
-        //Round values to nearest integer and not towards 0
-        x = roundf(calcX);
-        y = roundf(calcY);
-        
-        //Correct inverted y-axis
-        y *= -1;
-        
-        //Shift values back to orginal position
-        x = x + origin.getX2();
-        y = y + origin.getY2();
-       
-        //Set Values
-        currPosition[i].setX(x);
-        currPosition[i].setY(y);
+    //Rotate clockwise rdegree times
+    for (int i = 0; i < rDegree; i++){
+        //Loop through all coordinates
+        for(int i = 0; i < currPosition.size(); i++){
+            
+            //Get X and Y values
+            x = currPosition[i].getX();
+            y = currPosition[i].getY();
+            
+            //Shift values, so block starts at the origin
+            x -= origin.getX2();
+            y -= origin.getY2();
+            
+            //Use Rotation matrix to rotate point clockwise
+            calcX = (-1 * y);
+            calcY = x;
+            
+            //Shift values back to orginal position
+            x = floorf(calcX + origin.getX2());
+            y = floorf(calcY + origin.getY2());
+            
+            //Set Values
+            currPosition[i].setX(x);
+            currPosition[i].setY(y);
+        }
     }
     
     //Increment rotate counter

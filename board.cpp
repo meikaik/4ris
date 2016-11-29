@@ -14,7 +14,7 @@ using namespace std;
 Board::Board(Score * gameScore, Level * levelInfo) : gameScore(gameScore), levelInfo(levelInfo){
     
     //Create a 11 x 15 g	rid
-    for (int i = 0; i < 15; i++){
+    for (int i = 0; i < 18; i++){
         //Create a row
         grid.emplace_back(vector<char>());
         
@@ -61,7 +61,7 @@ bool Board::checkValidPos(){
         y = pos[i].getY();
         
         //Check if coordinate is not within the grid
-        if (x >= 15 || x < 0 || y >= 11 || y < 0 ){
+        if (x >= 18 || x < 0 || y >= 11 || y < 0 ){
             return false; //Invalid Pos
         }
         
@@ -192,7 +192,7 @@ void Board::checkRows(){
     int newScore  = 0;
     
     //Loop through rows to check for completness
-    for (int i = 14; i >= 0; i--){
+    for (int i = 17; i > 2; i--){
         //Loop through columns to check for spaces
         for (int j = 0; j < 11; j++ ){
             if (grid[i][j] == ' '){
@@ -284,7 +284,7 @@ string Board::getBlockList(){
     }
     
     //Loop through grid
-    for (int i = 0; i < 15; i++){
+    for (int i = 0; i < 18; i++){
         for (int j = 0; j < 11; j++){
             //Add character to string
             gridStr = gridStr + grid[i][j];
