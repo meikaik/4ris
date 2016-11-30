@@ -24,10 +24,11 @@ class Game {
     Level level;
     Board theBoard;
     TextDisplay tDisplay;
-    //GraphicsDisplay gDisplay;
+    GraphicsDisplay gDisplay;
     bool graphics;
     Score *gameScore;
     bool outType;
+    bool printScreen = true;
 public:
     Game(Score *);
     ~Game();

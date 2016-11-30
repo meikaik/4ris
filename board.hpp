@@ -48,6 +48,7 @@ public:
     void clearNext();
     void endGameCheck();
     std::string getBlockList();
+    std::vector<Coordinates> getNextPosition();
     int moveSinceClear;
     Score * returnGameScore();
     char getNextBlock();

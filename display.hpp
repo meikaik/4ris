@@ -12,14 +12,19 @@
 #include <iostream>
 #include <iomanip>
 #include <string>
+#include <vector>
 #include "board.hpp"
+#include "position.hpp"
+#include "window.h"
 
-class Display {
+class Board;
+
+class GameDisplay {
 protected:
     Board *currBoard;
     
 public:
-    Display(Board *);
+    GameDisplay(Board *);
     virtual void draw() = 0;
     virtual void drawScore() = 0;
     virtual void drawNext() = 0;
@@ -29,7 +34,7 @@ public:
 };
 
 
-class TextDisplay : public Display {
+class TextDisplay : public GameDisplay {
     
     std::vector<std::string> blockList {"  L\nLLL","J\nJJJ",
         "IIII", " SS\nSS", "ZZ\n ZZ", "TTT\n T", "OO\nOO"};
@@ -44,6 +49,23 @@ class TextDisplay : public Display {
     void drawError(std::string) override;
 };
 
+class GraphicsDisplay : public GameDisplay {
+    Xwindow x11Graphics;
+    std::vector<Coordinates> oldblock;
+    
+    public :
+    GraphicsDisplay(Board *);
+    int getColour(char btype);
+    void drawCurrBlock();
+    void draw() override;
+    void drawScore() override;
+    void drawNext() override;
+    void drawGrid() override;
+    void drawLevel() override;
+    void drawError(std::string) override;
+    bool textOnly = false; 
+    
+};
 
 
 #endif /* display_hpp */

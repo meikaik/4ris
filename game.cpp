@@ -11,7 +11,7 @@
 
 using namespace std;
 
-Game::Game(Score* gameScore): gameScore{gameScore}, level{0}, theBoard{gameScore, &level}, tDisplay{&theBoard} {
+Game::Game(Score* gameScore): gameScore{gameScore}, level{0}, gDisplay{&theBoard}, theBoard{gameScore, &level}, tDisplay{&theBoard} {
 }
 
 
@@ -20,6 +20,7 @@ Game::~Game() {
 
 void Game::start(string file, bool isTextOnly, int startLevel) {
     outType = isTextOnly;
+    gDisplay.textOnly = isTextOnly;
     this->level.setLevel(startLevel);
 }
 
@@ -60,8 +61,11 @@ void Game::hint() {
 }
 
 void Game::draw(){
-    //Draw game
+    //Print Game
     tDisplay.draw();
+    
+    //Draw game only if out type permits its
+    if (!(outType) && printScreen) gDisplay.draw(); //Print Entire Grid
 }
 
 void Game::makeMove(char moveVal) {
@@ -105,7 +109,7 @@ void Game::makeMove(char moveVal) {
             }
         }
     
-        //Draw
+        //Draw entire screen
         draw();
         
         theBoard.endGameCheck();

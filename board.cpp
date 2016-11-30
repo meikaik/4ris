@@ -13,7 +13,6 @@
 using namespace std;
 
 Board::Board(Score * gameScore, Level * levelInfo) : gameScore(gameScore), levelInfo(levelInfo){
-    
     //Create a 11 x 15 g	rid
     for (int i = 0; i < 18; i++){
         //Create a row
@@ -385,4 +384,8 @@ char Board::getNextBlock(){
 void Board::clearList(){
     //Clear nextblocks
     nextBlockList.clear();
+}
+
+vector<Coordinates> Board::getNextPosition(){
+    return nextBlockList.back().getPos();
 }
