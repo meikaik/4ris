@@ -92,7 +92,7 @@ void TextDisplay::drawError(string err){
 }
 
 //Graphics Display Implementation
-GraphicsDisplay::GraphicsDisplay(Board * theBoard) : x11Graphics(500, 540), GameDisplay{theBoard}{}
+GraphicsDisplay::GraphicsDisplay(Board * theBoard) : x11Graphics(750, 540), GameDisplay{theBoard}{}
 
 int GraphicsDisplay::getColour (char btype){
     switch (btype){
@@ -167,13 +167,13 @@ void GraphicsDisplay::draw() {
     //Prints notice message if mode is text only
     if (textOnly){
         string msg = "You are in text-only mode, please run game in graphics mode!";
-        x11Graphics.drawBigString(0, 270, "You Are Text Only Mode, Please G");
+        x11Graphics.drawString(150, 270, msg);
     }
     
     //Only draw game if out mode permits it
     if (textOnly == false){
         //Draw black background
-        x11Graphics.fillRectangle(0, 0, 500, 540, x11Graphics.Black);
+        x11Graphics.fillRectangle(0, 0, 750, 540, x11Graphics.Black);
         
         //Draw remaining components
         drawGrid();
@@ -184,11 +184,86 @@ void GraphicsDisplay::draw() {
 }
 
 void GraphicsDisplay::drawScore() {
+    int xdef = 400, textHeight = 35;
+    
+    //Get current/high score
+    int cScore = currBoard->returnGameScore()->currentScore();
+    int hScore = currBoard->returnGameScore()->currentHighScore();
+    
+    //Construct strings
+    string cMsg = "Score : " + to_string(cScore);
+    string hMsg = "High Score : " + to_string(hScore);
+    
+    //Draw Strings
+    x11Graphics.drawBigString(xdef - 20, textHeight + 30, cMsg, 2);
+    x11Graphics.drawBigString(xdef - 20, textHeight + 65, hMsg, 2);
     
 }
 
 void GraphicsDisplay::drawNext() {
+    int index = 0, colour = 0, xdef = 400;
+    int x = xdef, y = 410, cellwidth = 30;
+    int textHeight = y - 80;
+    string blockString;
     
+    //Draw string
+    x11Graphics.drawBigString(xdef - 20, textHeight + 30, "Next Block", 2);
+
+    //Get Char type of next block
+    char nChar = currBoard->getNextBlock();
+    
+    //Determine what string to use
+    switch (nChar) {
+        case 'L':
+            index = 0;
+            break;
+        case 'J' :
+            index = 1;
+            break;
+        case 'I' :
+            index = 2;
+            break;
+        case 'S' :
+            index = 3;
+            break;
+        case 'Z' :
+            index = 4;
+            break;
+        case 'T' :
+            index = 5;
+            break;
+        case 'O' :
+            index = 6;
+            break;
+        default:
+            break;
+    }
+    
+    //Get colour
+    colour = getColour(nChar);
+    
+    //Get matching string
+    blockString = blockList[index];
+    
+    //Loop through characters of string
+    for (int i = 0; i < blockString.size(); i++){
+        //Draw Block, if it is a vaid character
+        if (blockString[i] != '\n' && blockString[i] != ' '){
+            x11Graphics.fillRectangle(x, y, cellwidth, cellwidth, colour);
+        }
+        
+        //Modify x, and y
+        if (blockString[i] == '\n') {
+            //New line reset X
+            x = xdef;
+            y = y + cellwidth;
+        }
+        else{
+            //New Cell, increment X
+            x = x + cellwidth;
+            y = y;
+        }
+    }
 }
 
 void GraphicsDisplay::drawGrid() {
@@ -221,14 +296,29 @@ void GraphicsDisplay::drawGrid() {
             x = x + cellwidth;
         }
     }
+    
+    //Draw Next Block Space
+    x11Graphics.fillRectangle(380, 368, 149, 130, 9);
 }
 
 void GraphicsDisplay::drawLevel() {
+    int xdef = 400, textHeight = 0;
+    int levelNum;
+    string msg;
     
+    //Get levelNum
+    levelNum = currBoard->getLevel();
+    
+    //Make level string
+    msg = "Level : " + to_string(levelNum);
+    
+    x11Graphics.drawBigString(xdef - 20, textHeight + 30, msg, 2);
 }
 
 void GraphicsDisplay::drawError(std::string err) {
-    
+    //Print Error
+    x11Graphics.drawString(150, 270, err, 2);
+
 }
 
 

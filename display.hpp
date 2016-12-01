@@ -52,6 +52,8 @@ class TextDisplay : public GameDisplay {
 class GraphicsDisplay : public GameDisplay {
     Xwindow x11Graphics;
     std::vector<Coordinates> oldblock;
+    std::vector<std::string> blockList {"  L\nLLL","J\nJJJ",
+        "IIII", " SS\nSS", "ZZ\n ZZ", "TTT\n T", "OO\nOO"};
     
     public :
     GraphicsDisplay(Board *);

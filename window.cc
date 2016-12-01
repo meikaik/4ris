@@ -19,6 +19,7 @@ Xwindow::Xwindow(int width, int height): width(width), height(height) {
   s = DefaultScreen(d);
   w = XCreateSimpleWindow(d, RootWindow(d, s), 10, 10, width, height, 1,
                           BlackPixel(d, s), WhitePixel(d, s));
+  XStoreName(d, w, "Quadris v0.01 - By : Harsh, Meikai, and Karam");
   XSelectInput(d, w, ExposureMask | KeyPressMask);
   XMapRaised(d, w);
 
