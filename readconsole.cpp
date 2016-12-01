@@ -28,13 +28,10 @@ void ReadConsole::startRead(string *file) {
     string s;
     int pos = 0;
     
-  
-    
     for(;;) {
         if (!(cin >> s)){
             break;
         }
-        
         
         for(int i = 0; i < commandList.size(); i++) {
             if (s == commandList[i]) {
