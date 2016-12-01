@@ -51,6 +51,19 @@ void Level::setLevel(int levelVal) {
         setWeight(1);
         setNewBlock('*', 5);
     }
+    else if (levelVal > 4){
+        float temp[7] = { 1, 1, 1, 1, 2, 2, 1};
+        probabilities.clear();
+        probabilities.insert(probabilities.end(), temp, temp+7);
+        setWeight(1);
+        setNewBlock('*', 5);
+        levelNumber = 4;
+    }
+    else if (levelVal < 0){
+        dropNewBlock = false;
+        isRandom = false;
+        levelNumber = 0;
+    }
     
     //Check to see if level is not 0
     if (levelVal != 0){

@@ -9,6 +9,10 @@
 #include "display.hpp"
 using namespace std;
 
+GameDisplay::~GameDisplay(){
+    
+}
+
 GameDisplay::GameDisplay(Board *theBoard): currBoard{theBoard}{}
 
 TextDisplay::TextDisplay (Board *theBoard) : GameDisplay(theBoard){}
@@ -149,6 +153,9 @@ int GraphicsDisplay::getColour (char btype){
             break;
         case '\n':
             return 1;
+            break;
+        case '*':
+            return 9;
             break;
         default :
             return 0;

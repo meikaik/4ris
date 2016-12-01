@@ -31,6 +31,7 @@ public:
     virtual void drawGrid() = 0;
     virtual void drawLevel() = 0;
     virtual void drawError(std::string) = 0;
+    virtual ~GameDisplay();
 };
 
 

@@ -63,7 +63,6 @@ private:
     Level * levelInfo;
     std::vector<Block> nextBlockList;
     Score * gameScore;
-    int countSinceClear;
     std::vector<Block> blockList;
     std::vector<Position> validPosList;
     bool isRandom = false;

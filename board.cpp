@@ -293,6 +293,8 @@ void Board::drop(){
     blockList.emplace_back(Block(nextBlockList.back()));
     nextBlockList.pop_back();
     
+    moveSinceClear++;
+    
     //Check rows for filled rows
     checkRows();
     
@@ -341,9 +343,10 @@ void Board::checkRows(){
     bool clear = true;
     int count = 0;
     int newScore  = 0;
+    vector<int> filledRows;
     
     //Loop through rows to check for completness
-    for (int i = 17; i > 2; i--){
+    for (int i = 3; i < 18; i++){
         //Loop through columns to check for spaces
         for (int j = 0; j < 11; j++ ){
             if (grid[i][j] == ' '){
@@ -361,6 +364,9 @@ void Board::checkRows(){
             
             //Increment Row count
             count ++;
+            
+            //Reset class wide counter
+            moveSinceClear = 0;
         }
         
         //Reset clear variable to avoid undefined behaviour

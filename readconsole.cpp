@@ -13,6 +13,7 @@
 using namespace std;
 
 ReadConsole::ReadConsole(Score *gameScore, int startLevel, string scriptFile, bool textMode): gameScore{gameScore}, startLevel(startLevel),  scriptFile{scriptFile}, textMode{textMode} {
+    currGame = nullptr;
     cout << "Quadris v0.01 - By : Harsh, Meikai, and Karam" << endl;
     cout << "Enter commands or type 'help' for a list of commands" << endl;
     startGame();
@@ -131,8 +132,6 @@ void ReadConsole::sequence(string file) {
     while (blocks >> blockString){
         currGame->makeRandom(&blockString, false); //call Game class's makeRandom with list of blocks. false to distinguish between noRandom sequence.
     }
-    
-    currGame->draw(); //call the Game's draw fn
 }
 void ReadConsole::random() {
     currGame->makeRandom(nullptr, true); //call Game class's makeRandom with nullptr instead of blocks.
@@ -181,5 +180,8 @@ void ReadConsole::startGame() {
     delete currGame;
     currGame = new Game(gameScore); //create new game ptr.
     currGame->start("", textMode, startLevel); //call Game's start game with current lvl.
-    if (startLevel == 0) sequence(scriptFile); //at level 0 set sequence file to ctors val.
+    if (startLevel == 0) {
+        sequence(scriptFile); //at level 0 set sequence file to ctors val.
+        currGame->draw(); //call the Game's draw fn
+    }
 }

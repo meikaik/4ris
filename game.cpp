@@ -85,7 +85,7 @@ void Game::draw(){
 void Game::makeMove(char moveVal) {
     try {
         if (theBoard.moveSinceClear == level.returnCountTillNew() &&
-            level.getLevel() > 2) {
+            level.getLevel() == 4) {
             theBoard.moveSinceClear = 0;
             theBoard.dropNewBlock(level.returnBlockType());
         }

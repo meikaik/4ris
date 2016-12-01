@@ -14,6 +14,7 @@ using namespace std;
 Coordinates::Coordinates(int x, int y): x{x}, y{y}{}
 Coordinates::Coordinates(float x, float y): x2{x}, y2{y}{}
 
+
 int Coordinates::getX() { return x;}
 int Coordinates::getY() { return y;}
 void Coordinates::setX(int xNew){ x = xNew;}
@@ -55,6 +56,10 @@ Position::Position(char bType) : rotateDegree(0), origin(4.0f,1.0f){
         Coordinates temp[4] = {{4,0}, {4,1}, {4,2}, {4,3}};
         currPosition.insert(currPosition.end(), temp, temp + 4);
         origin.setX2(4.5f);
+    }
+    else if (bType == '*'){
+        currPosition.push_back(Coordinates(2, 5));
+
     }
 }
 
@@ -194,6 +199,7 @@ Position::Position(const Position &other) : origin(other.origin){
     currPosition = other.currPosition;
     rotateDegree = other.rotateDegree;
 }
+
 
 Position & Position::operator=(const Position &other){
     currPosition = other.currPosition;

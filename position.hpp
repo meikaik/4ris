@@ -14,7 +14,7 @@
 
 class Coordinates {
     int x = 0, y = 0;
-    float x2, y2;
+    float x2 = 0.0f, y2 = 0.0f;
     
     public :
     Coordinates (int x, int y);
