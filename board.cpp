@@ -338,7 +338,7 @@ void Board::deleteCells(int rowNum){
 }
 
 void Board::checkRows(){
-    bool clear = false;
+    bool clear = true;
     int count = 0;
     int newScore  = 0;
     
@@ -348,9 +348,6 @@ void Board::checkRows(){
         for (int j = 0; j < 11; j++ ){
             if (grid[i][j] == ' '){
                 clear = false;
-            }
-            else {
-                clear = true;
             }
         }
         
@@ -367,7 +364,7 @@ void Board::checkRows(){
         }
         
         //Reset clear variable to avoid undefined behaviour
-        clear = false;
+        clear = true;
     }
     
     //Increment score

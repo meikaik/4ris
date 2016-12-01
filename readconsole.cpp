@@ -25,29 +25,63 @@ ReadConsole::~ReadConsole() { //dtor
 
 void ReadConsole::startRead(string *file) { //startRead takes in commands from cin
     string tmp;
-    string s;
-    int pos = 0;
+    string cmpSubString, sSubString;
+    string s, numString = "";
+    int pos = -1, multipler = 1, len = 0;
     
     for(;;) {
         if (!(cin >> s)){
             break;
         }
         
-        for(int i = 0; i < commandList.size(); i++) {
-            if (s == commandList[i]) {
-                pos = i; //goes through the commandList and stores the index of currentcommand.
+        //Loop through string till non-digit char is found
+        for(int i = 0; i < s.length(); i++){
+            if (isdigit(s[i])){
+                numString = numString + s[i]; //Apped on to numstring
+                len ++; //Increment length
+            }
+            else {
+                if (i > 0) numString = s.substr(0, len);
                 break;
             }
         }
         
+        //Remove multipler from s
+        s.erase(0, len);
+        
+        //Convert multipler from string to int
+        if (numString != "") multipler = stoi(numString);
+        
+        //Loop through command list and look for a command
+        for(int i = 0; i < commandList.size(); i++) {
+            
+            //Get substrings
+            try {
+                cmpSubString = commandList[i].substr(0,subLength[i]);
+                sSubString = s.substr(0, subLength[i]);
+                if (cmpSubString == sSubString) {
+                    pos = i; //goes through the commandList and stores the index of currentcommand.
+                    break;
+                }
+            }
+            catch (...){
+            }
+        }
+        
         if (pos < 6){ //anything less than 6 is a move command
+            for (int i = 0; i < multipler; i++){
             move(pos);
+            }
         }
         else if( pos == 6){
+            for (int i = 0; i < multipler; i++){
             levelAction(true); //level up
+            }
         }
         else if (pos == 7){
+            for (int i = 0; i < multipler; i++){
             levelAction(false); //level down
+            }
         }
         else if (pos == 8){
             cin >> tmp;
@@ -72,6 +106,11 @@ void ReadConsole::startRead(string *file) { //startRead takes in commands from c
         else {
             cout << "Invalid command" << endl;
         }
+        
+        multipler = 1;
+        numString = "";
+        len = 0;
+        pos = -1;
         
     }
 }

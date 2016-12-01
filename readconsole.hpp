@@ -22,6 +22,7 @@ class ReadConsole {
     std::string scriptFile;
     bool textMode;
     std::vector<std::string> commandList {"left", "right", "down", "clockwise", "counterclockwise", "drop", "levelup", "leveldown", "norandom", "sequence", "I", "J", "L", "O", "S", "Z", "T", "restart", "hint", "help"};
+    std::vector<int> subLength {3, 2, 2, 2, 2, 2, 6, 6, 1, 2, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2};
 public:
     ReadConsole(Score*, int, std::string, bool);
     ~ReadConsole();

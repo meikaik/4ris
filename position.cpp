@@ -47,7 +47,7 @@ Position::Position(char bType) : rotateDegree(0), origin(4.0f,1.0f){
         currPosition.insert(currPosition.end(), temp, temp + 4);
     }
     else if (bType == 'O'){
-        Coordinates temp[4] = {{3,1}, {3,2}, {4,1}, {4,2}};
+        Coordinates temp[4] = {{3,0}, {3,1}, {4,0}, {4,1}};
         currPosition.insert(currPosition.end(), temp, temp + 4);
         //origin.setX2(1.5f);
     }
