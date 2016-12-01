@@ -95,8 +95,12 @@ void Position::translate (int dir){
 }
 void Position::rotate(int degree){
     float x, y;
-    float calcX, calcY, rDegree;
+    float calcX, calcY, rDegree = 0;
     
+    //Set degree to  90 if it is not valid
+    if (degree != 90 && degree != -90 && degree != 0){
+        degree = 90;
+    }
     
     //Calculate Rotate degree
     if (degree == 90){
@@ -157,6 +161,19 @@ bool Position::deleteCell(Coordinates cell){
     }
 }
 
+void Position::shiftTo(int height){
+    //Get shift values
+    int x = (height - 1) - currPosition[0].getX();
+    int y = currPosition[0].getY();
+    
+    //Loop through all coordinates
+    for (int i = 0; i < currPosition.size(); i++){
+        //Shift all the values to (height, 0)
+        currPosition[i].setX(currPosition[i].getX() + x);
+        currPosition[i].setY(currPosition[i].getY() - y);
+    }
+}
+
 int Position::getRotate() {return rotateDegree;}
 
 vector<Coordinates> Position::getPosition() {return currPosition;}
@@ -172,3 +189,4 @@ Position & Position::operator=(const Position &other){
     rotateDegree = other.rotateDegree;
     return *this;
 }
+

@@ -92,11 +92,35 @@ bool Board::checkValidPos(){
     return true;
 }
 
-Position Board::hint(){
+vector<Coordinates> Board::hint(){
+    int height = 0;
+    bool rowFound = false;
+    vector<Position> validPosList;
     
-    Position temp('I');
+    //Make a backup of position
+    Position temp = nextBlockList.back().getPosObject();
     
-    return temp;
+    //Find height of blocks
+    for (int i = 0; i < 18; i++){
+        for (int j = 0; j < 11; j++){
+            //Check if cell is not a space
+            if (grid [i][j] != ' '){
+                rowFound = true;
+                height = i;
+                break;
+            }
+        }
+        
+        //Break if height has been found
+        if (rowFound) break;
+    }
+    
+    //Shift all values to height
+    nextBlockList.back().shiftTo(height);
+    
+    
+
+    return vector<Coordinates>{{1,0}};
 }
 
 void Board::translateBlock(int dir){

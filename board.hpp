@@ -27,7 +27,7 @@ public:
     void setLevel(int level);
     void replaceBlock(char block);
     void moveLeft();
-    Position hint();
+    std::vector<Coordinates> hint();
     void moveRight();
     void moveDown();
     void drop();

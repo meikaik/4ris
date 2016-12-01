@@ -48,10 +48,14 @@ void Game::levelDown() {
     draw();
 }
 void Game::replaceBlock(char block) {
+    //Replace Block and match rotation
     theBoard.replaceBlock(block);
+    
+    //Draw grid
+    draw();
 }
 void Game::hint() {
-    //Position pos = theBoard.hint();
+    vector<Coordinates> pos = theBoard.hint();
     if (!(outType)) {
         //gDisplay.updateBoard(&theBoard);
         //gDisplay.printHint(&pos);
@@ -82,6 +86,7 @@ void Game::makeMove(char moveVal) {
             theBoard.genNewList();
         }
         
+        //Determine correct move
         switch (moveVal) {
             case 0 :
                 theBoard.moveLeft();

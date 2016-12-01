@@ -55,6 +55,11 @@ int Block::getCenter(){
     return currPosition.getRotate();
 }
 
+void Block::shiftTo(int height){
+    //Shift pos to desired height
+    currPosition.shiftTo(height);
+}
+
 void Block::setLevel(int level){
     levelNum = level;
 }
@@ -72,3 +77,7 @@ Block & Block::operator=(const Block &other){
     this->bType = other.bType;
     return *this;
 }
+
+Position Block::getPosObject () { return oldPosition;}
+
+void Block::setPosObject(Position other) { currPosition = other;}

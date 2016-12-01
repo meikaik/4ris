@@ -24,12 +24,15 @@ public:
     Block &operator=(Block &other) = default;
     Block &operator=(const Block &other);
     std::vector<Coordinates> getPos();
+    Position getPosObject();
+    void setPosObject(Position other);
     void translate(int dir);
     void rotateBlock(int degree);
     void restoreOldPosition();
     bool deleteCell(Coordinates x);
     void setCenter(int val);
     void setLevel(int level);
+    void shiftTo(int height);
     int getLevel();
     char type();
     int getCenter();

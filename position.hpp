@@ -32,7 +32,7 @@ class Coordinates {
 
 class Position {
     std::vector<Coordinates> currPosition;
-    int rotateDegree;
+    int rotateDegree = 0;
     Coordinates origin;
     
     public :
@@ -46,6 +46,7 @@ class Position {
     void rotate(int degree);
     bool deleteCell(Coordinates cell);
     int getRotate();
+    void shiftTo(int height);
 };
 
 
