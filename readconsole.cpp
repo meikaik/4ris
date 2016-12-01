@@ -16,14 +16,14 @@ ReadConsole::ReadConsole(Score *gameScore, int startLevel, string scriptFile, bo
     cout << "Quadris v0.01 - By : Harsh, Meikai, and Karam" << endl;
     cout << "Enter commands or type 'help' for a list of commands" << endl;
     startGame();
-}
+} // readconsole ctor initalizes fields, and calls startGame fn.
 
-ReadConsole::~ReadConsole() {
+ReadConsole::~ReadConsole() { //dtor
     delete currGame;
     delete gameScore;
 }
 
-void ReadConsole::startRead(string *file) {
+void ReadConsole::startRead(string *file) { //startRead takes in commands from cin
     string tmp;
     string s;
     int pos = 0;
@@ -38,39 +38,39 @@ void ReadConsole::startRead(string *file) {
         
         for(int i = 0; i < commandList.size(); i++) {
             if (s == commandList[i]) {
-                pos = i;
+                pos = i; //goes through the commandList and stores the index of currentcommand.
                 break;
             }
         }
         
-        if (pos < 6){
+        if (pos < 6){ //anything less than 6 is a move command
             move(pos);
         }
         else if( pos == 6){
-            levelAction(true);
+            levelAction(true); //level up
         }
         else if (pos == 7){
-            levelAction(false);
+            levelAction(false); //level down
         }
         else if (pos == 8){
             cin >> tmp;
-            noRandom(tmp);
+            noRandom(tmp); //take input from tmp file instead of randomness (only lvl 3 and 4)
         }
         else if (pos == 9){
             cin >> tmp;
-            sequence(tmp);
+            sequence(tmp); //takes input from tmp file (any level)
         }
         else if (pos < 17 && pos >= 10){
-            replaceBlock(s[0]);
+            replaceBlock(s[0]); //replace block fn
         }
         else if (pos == 17){
-            restart();
+            restart(); //restart game with a game.
         }
         else if (pos == 18) {
-            hint();
+            hint(); //gives the best place to place a block
         }
         else if (pos == 19){
-            help();
+            help(); //list the valid commands
         }
         else {
             cout << "Invalid command" << endl;
@@ -93,57 +93,57 @@ void ReadConsole::sequence(string file) {
     string blockString;
     
     while (blocks >> blockString){
-        currGame->makeRandom(&blockString, false);
+        currGame->makeRandom(&blockString, false); //call Game class's makeRandom with list of blocks. false to distinguish between noRandom sequence.
     }
     
-    currGame->draw();
+    currGame->draw(); //call the Game's draw fn
 }
 void ReadConsole::random() {
-    currGame->makeRandom(nullptr, true);
+    currGame->makeRandom(nullptr, true); //call Game class's makeRandom with nullptr instead of blocks.
 }
 void ReadConsole::noRandom(string file) {
     ifstream blocks{file};
     string blockString;
     
     while (blocks >> blockString){
-        currGame->makeRandom(&blockString, true);
+        currGame->makeRandom(&blockString, true); //true to distinguish from sequnce cmd
     }
 }
 void ReadConsole::replaceBlock(char block) {
-    currGame->replaceBlock(block);
+    currGame->replaceBlock(block); //call Game's replace block.
 }
 void ReadConsole::restart() {
-    delete currGame;
-    startLevel = 0;
-    gameScore->resetCurrScore();
-    currGame = new Game(gameScore);
+    delete currGame; //delete game ptr
+    startLevel = 0; //default lvl
+    gameScore->resetCurrScore(); //reset gameScore.
+    currGame = new Game(gameScore); //create new Game ptr.
     currGame->start("", 0, 0);
-    sequence(scriptFile);
+    sequence(scriptFile); //take input from sequence file.
 }
 void ReadConsole::hint() {
-    currGame->hint();
+    currGame->hint(); //Game's hint
 }
 void ReadConsole::move(int moveCommand) {
     try {
-    currGame->makeMove(moveCommand);
+    currGame->makeMove(moveCommand); //check valid move.
     }
     catch (...){
-        restart();
+        restart(); //restart game if exn caught.
     }
 }
 void ReadConsole::levelAction(bool increase) {
-    if (increase) {
+    if (increase) { //true calls Game's level up
         currGame->levelUp();
-        startLevel ++;
+        startLevel ++; //stores current level.
     }
     else {
-        currGame->levelDown();
-        startLevel --;
+        currGame->levelDown(); //Game's level down.
+        startLevel --; //stores current level.
     }
 }
 void ReadConsole::startGame() {
     delete currGame;
-    currGame = new Game(gameScore);
-    currGame->start("", textMode, startLevel);
-    if (startLevel == 0) sequence(scriptFile);
+    currGame = new Game(gameScore); //create new game ptr.
+    currGame->start("", textMode, startLevel); //call Game's start game with current lvl.
+    if (startLevel == 0) sequence(scriptFile); //at level 0 set sequence file to ctors val.
 }

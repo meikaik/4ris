@@ -15,11 +15,11 @@
 #include "score.hpp"
 using namespace std;
 
-int main(int argc, const char *argv[]) {
-    int seed = 783478378;
-    int startLevel = 0;
-    bool textMode = false;
-    string scriptFile{"sequence.txt"};
+int main(int argc, const char *argv[]) { //program takes cmd arguments
+    int seed = 783478378; //random seed val generates the same sequence
+    int startLevel = 0; //default level
+    bool textMode = false; // default display
+    string scriptFile{"sequence.txt"}; //following code initilizes the prior 3 vars.
     string argInput;
     for (int i = 0; i < argc; i++) {
         argInput = argv[i];
@@ -40,10 +40,10 @@ int main(int argc, const char *argv[]) {
     }
     
    
-    Score *indefiniteScore = new Score();
-    srand(seed);
-    ReadConsole rc (indefiniteScore, startLevel, scriptFile, textMode);
-    rc.startRead(nullptr);
+    Score *indefiniteScore = new Score(); //defualt score pointer
+    srand(seed); //creates a random order for subsequent rands based on seed
+    ReadConsole rc (indefiniteScore, startLevel, scriptFile, textMode); //Readconsole's ctor
+    rc.startRead(nullptr); //startRead is initilized to take in commands.
     return 0;
 }
 
