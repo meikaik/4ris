@@ -50,6 +50,8 @@ void Block::setCenter(int val) {
 
 char Block::type(){ return bType;}
 
+int Block::getHeight() {return currPosition.getHeight();}
+
 int Block::getCenter(){
     //Get rotatation value based on center
     return currPosition.getRotate();
@@ -60,7 +62,9 @@ void Block::shiftTo(int height){
     currPosition.shiftTo(height);
 }
 
+
 void Block::setLevel(int level){
+    //Set Level
     levelNum = level;
 }
 

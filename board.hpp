@@ -39,7 +39,10 @@ public:
     void random(bool randomVal);
     char genOneBlock();
     void genNewList();
-    void clearList(); 
+    void clearList();
+    bool hintCheckPos(Block other);
+    void hintCheckRight(Block other);
+    void hintCheck(Block other);
     void translateBlock(int dir);
     bool getGenState();
     int getLevel();
@@ -62,6 +65,7 @@ private:
     Score * gameScore;
     int countSinceClear;
     std::vector<Block> blockList;
+    std::vector<Position> validPosList;
     bool isRandom = false;
     
 };

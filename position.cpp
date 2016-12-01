@@ -174,6 +174,18 @@ void Position::shiftTo(int height){
     }
 }
 
+int Position::getHeight() {
+    int x = 0;
+    
+    //Loop through all cordinates and find the lowest X
+    for (int i = 0; i < currPosition.size(); i++){
+        if (currPosition[i].getX() > x) x = currPosition[i].getX();
+    }
+    
+    //Return height
+    return x + 1;
+}
+
 int Position::getRotate() {return rotateDegree;}
 
 vector<Coordinates> Position::getPosition() {return currPosition;}

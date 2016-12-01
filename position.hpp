@@ -46,6 +46,7 @@ class Position {
     void rotate(int degree);
     bool deleteCell(Coordinates cell);
     int getRotate();
+    int getHeight();
     void shiftTo(int height);
 };
 

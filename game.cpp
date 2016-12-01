@@ -56,12 +56,22 @@ void Game::replaceBlock(char block) {
 }
 void Game::hint() {
     vector<Coordinates> pos = theBoard.hint();
-    if (!(outType)) {
-        //gDisplay.updateBoard(&theBoard);
-        //gDisplay.printHint(&pos);
+    
+    if (pos.size() == 1) {
+        string msg = "No Ideal Position Can Be Found";
+        
+        //Print error
+        tDisplay.drawError(msg);
+        if (!(outType)) gDisplay.drawError(msg);
     }
-    //tDisplay.updateBoard(&theBoard);
-    //tDisplay.printHint(&pos);
+    
+    //Update graphics display
+    if (!(outType)) {
+        gDisplay.drawHint(pos);
+    }
+    
+    //Update textdisplay
+    tDisplay.printHint(pos);
 }
 
 void Game::draw(){

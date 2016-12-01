@@ -91,6 +91,36 @@ void TextDisplay::drawError(string err){
     cout << "Restarting Game ...." << endl;
 }
 
+void TextDisplay::printHint(vector<Coordinates> &pos){
+    int x, y, stringIndex;
+    int rowSize = 12;
+    string grid;
+    
+    //Get grid
+    grid = currBoard->getBlockList();
+    
+    //Loop through all coordinates
+    for (int i = 0; i < pos.size(); i++){
+        //Get X and Y values
+        x = pos[i].getX();
+        y = pos[i].getY();
+        
+        //Calculate corresponding string index
+        stringIndex = x * rowSize;
+        stringIndex = stringIndex + y;
+        
+        //Set value in string to ?
+        grid[stringIndex] = '?';
+    }
+    
+    //Draw components in order
+    drawLevel();
+    drawScore();
+    cout << grid; // Grid
+    cout << "-----------" << endl; // Divider Line
+    drawNext();
+}
+
 //Graphics Display Implementation
 GraphicsDisplay::GraphicsDisplay(Board * theBoard) : x11Graphics(750, 540), GameDisplay{theBoard}{}
 
@@ -116,6 +146,9 @@ int GraphicsDisplay::getColour (char btype){
             break;
         case 'Z' :
             return 2;
+            break;
+        case '\n':
+            return 1;
             break;
         default :
             return 0;
@@ -173,7 +206,7 @@ void GraphicsDisplay::draw() {
     //Only draw game if out mode permits it
     if (textOnly == false){
         //Draw black background
-        x11Graphics.fillRectangle(0, 0, 750, 540, x11Graphics.Black);
+        x11Graphics.fillRectangle(0, 0, 750, 540, x11Graphics.White);
         
         //Draw remaining components
         drawGrid();
@@ -236,6 +269,7 @@ void GraphicsDisplay::drawNext() {
             index = 6;
             break;
         default:
+            index = 0;
             break;
     }
     
@@ -298,7 +332,7 @@ void GraphicsDisplay::drawGrid() {
     }
     
     //Draw Next Block Space
-    x11Graphics.fillRectangle(380, 368, 149, 130, 9);
+    x11Graphics.fillRectangle(380, 368, 149, 130, 1);
 }
 
 void GraphicsDisplay::drawLevel() {
@@ -319,6 +353,24 @@ void GraphicsDisplay::drawError(std::string err) {
     //Print Error
     x11Graphics.drawString(150, 270, err, 2);
 
+}
+
+void GraphicsDisplay::drawHint(std::vector<Coordinates> &pos){
+    int cellwidth = 30;
+    int x = 0, y = 0;
+    
+    //Draw Grid
+    draw();
+    
+    //Loop through coordinates and draw them
+    for (int i = 0; i < pos.size(); i++){
+        //Calculate x and y
+        x = pos[i].getX() * cellwidth;
+        y = pos[i].getY() * cellwidth;
+        
+        //Draw
+        x11Graphics.fillRectangle(y, x, cellwidth, cellwidth, x11Graphics.Black);
+    }
 }
 
 

@@ -33,6 +33,7 @@ public:
     void setCenter(int val);
     void setLevel(int level);
     void shiftTo(int height);
+    int getHeight();
     int getLevel();
     char type();
     int getCenter();

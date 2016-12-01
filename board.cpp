@@ -92,35 +92,149 @@ bool Board::checkValidPos(){
     return true;
 }
 
-vector<Coordinates> Board::hint(){
-    int height = 0;
-    bool rowFound = false;
-    vector<Position> validPosList;
+bool Board::hintCheckPos(Block other){
+    vector<Coordinates> pos;
+    int x, y;
+    
+    //Get position of current block
+    pos = other.getPos();
+    
+    //Loop through all positions
+    for (int i = 0; i < pos.size(); i++){
+        //Get X and Y
+        x = pos[i].getX();
+        y = pos[i].getY();
+        
+        //Check if coordinate is not within the grid
+        if (x >= 18 || x < 0 || y >= 11 || y < 0 ){
+            return false; //Invalid Pos
+        }
+        
+        //Check if coordinates are taken
+        if (grid[x][y] != ' '){
+            return false; //Invalid Pos
+        }
+    }
+    
+    return true;
+}
+
+void Board::hintCheckRight(Block other){
+    Block temp = other;
+    bool right = false;
+    
+    //Shift block 1 to the right
+    other.translate(2);
+    
+    right = hintCheckPos(other);
+    
+    //Check all valid positions
+    if (right) {
+        hintCheck(other);
+        
+        //Check if right is valid
+        temp = other;
+        temp.translate(2);
+        right = hintCheckPos(temp);
+        
+        //recursion check
+        if (right) hintCheckRight(other);
+    }
+    
+ 
+}
+
+void Board::hintCheck(Block other){
+    Block temp = other;
+    bool down = false, right = false ;
+    
+    //Check if down is valid
+    temp.translate(3);
+    down = hintCheckPos(temp);
+    
+    if (!(down)) return;
+    
+    //Keep moving down till, position is not valid
+    while (hintCheckPos(other)){
+        other.translate(3);
+    }
+    
+    //Restore old positiom
+    other.restoreOldPosition();
+    
+    //Record Valid Position
+    validPosList.push_back(other.getPosObject());
+    
+    //Shift block as far left as possible
+    while (hintCheckPos(other)){
+        other.translate(4);
+    }
+    
+    //Check if down is valid
+    temp = other;
+    temp.translate(3);
+    down = hintCheckPos(temp);
+    
+    //Check if right is valid
+    temp = other;
+    temp.translate(2);
+    right = hintCheckPos(temp);
+    
+    //Do checks for recursion
+    if (down) hintCheckPos(other);
+    if (!(down)) validPosList.push_back(other.getPosObject());
+    if (right) hintCheckRight(other);
+}
+
+vector<Coordinates> Board::hint() {
+    int x = 0, index = 0;
+    vector<Coordinates> returnVal;
     
     //Make a backup of position
     Position temp = nextBlockList.back().getPosObject();
+    Block tmpBlock = nextBlockList.back();
     
-    //Find height of blocks
-    for (int i = 0; i < 18; i++){
-        for (int j = 0; j < 11; j++){
-            //Check if cell is not a space
-            if (grid [i][j] != ' '){
-                rowFound = true;
-                height = i;
-                break;
-            }
-        }
-        
-        //Break if height has been found
-        if (rowFound) break;
+    //Shift block as far left as possible
+    while (checkValidPos()){
+        nextBlockList.back().translate(4);
     }
     
-    //Shift all values to height
-    nextBlockList.back().shiftTo(height);
+    //Restore old position
+    nextBlockList.back().restoreOldPosition();
     
+    //Check all valid positions
+    hintCheck(nextBlockList.back());
+    hintCheckRight(nextBlockList.back());
     
-
-    return vector<Coordinates>{{1,0}};
+    //Stop if there is no valid positions
+    if (validPosList.empty()){
+        //Restore current position
+        nextBlockList.pop_back();
+        nextBlockList.push_back(Block(tmpBlock));
+        
+        //Return stop position
+        return vector<Coordinates>{{-1,-1}};
+    }
+    
+    //Loop through all valid postions to find lowest value
+    for (int i = 0; i < validPosList.size(); i++){
+        if (validPosList[i].getHeight() > x){
+            x = validPosList[i].getHeight(); //Set new height
+            index = i; //Record index
+        }
+    }
+    
+    //Get ideal position
+    returnVal = validPosList[index].getPosition();
+    
+    //Clear valid list
+    validPosList.clear();
+    
+    //Restore current position
+    nextBlockList.pop_back();
+    nextBlockList.push_back(Block(tmpBlock));
+    
+    return returnVal;
 }
 
 void Board::translateBlock(int dir){
@@ -181,7 +295,7 @@ void Board::drop(){
     
     //Check rows for filled rows
     checkRows();
-
+    
 }
 
 void Board::rotate(int degree){
@@ -330,9 +444,9 @@ char Board::genOneBlock(){
 
 void Board::genNewList(){
     char ranBlock;
-
-    for (int i = 0; i < 20; i++){
     
+    for (int i = 0; i < 20; i++){
+        
         //Get random block type
         ranBlock = genOneBlock();
         

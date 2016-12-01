@@ -41,6 +41,7 @@ class TextDisplay : public GameDisplay {
     
     public :
     TextDisplay(Board *);
+    void printHint(std::vector<Coordinates> &pos);
     void draw() override;
     void drawScore() override;
     void drawNext() override;
@@ -59,6 +60,7 @@ class GraphicsDisplay : public GameDisplay {
     GraphicsDisplay(Board *);
     int getColour(char btype);
     void drawCurrBlock();
+    void drawHint(std::vector<Coordinates> &pos);
     void draw() override;
     void drawScore() override;
     void drawNext() override;
