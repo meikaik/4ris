@@ -30,11 +30,18 @@ Board::~Board(){}
 bool Board::isEmpty() { return nextBlockList.empty();}
 
 void Board::endGameCheck(){
+    int x, y;
+    
     //Check if there are no more blocks while mode is non-random
     if (nextBlockList.empty() && !(levelInfo->ranState())){
         //Throw game over
         throw GameOver{"Game Over : No More Blocks!"};
     }
+    
+    //Get board string
+    string bString = getBlockList();
+    
+    //Calculate starting index 
     
     //Check to see if any blocks are in the first row
     for (int i = 0; i < 11; i++){

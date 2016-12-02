@@ -53,7 +53,7 @@ Position::Position(char bType) : rotateDegree(0), origin(4.0f,1.0f){
         //origin.setX2(1.5f);
     }
     else if (bType == 'I'){
-        Coordinates temp[4] = {{3,0}, {3,1}, {3,2}, {3,3}};
+        Coordinates temp[4] = {{4,0}, {4,1}, {4,2}, {4,3}};
         currPosition.insert(currPosition.end(), temp, temp + 4);
         origin.setX2(4.5f);
     }
@@ -109,10 +109,10 @@ void Position::rotate(int degree){
     
     //Calculate Rotate degree
     if (degree == 90){
-        rDegree = 3; // clockwise rotation
+        rDegree = 1;
     }
     else {
-        rDegree = 1; // counterclockwise rotation
+        rDegree = 3;
     }
     
     //Rotate clockwise rdegree times
