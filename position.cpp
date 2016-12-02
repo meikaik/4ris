@@ -144,7 +144,34 @@ void Position::rotate(int degree){
     
     //Increment rotate counter
     rotateDegree += degree;
-    
+    if (rotateDegree == -360) {
+        translate(1);
+        translate(2);
+        translate(3);
+    }
+    if ((rotateDegree == 360) || (rotateDegree == -360)) {
+        rotateDegree = 0;
+        translate(3);
+    }
+    else if (rotateDegree == 90) {
+        translate(1);
+        translate(4);
+    }
+    else if (rotateDegree == 180) {
+        translate(4);
+        translate(2);
+        translate(2);
+    }
+    else if (rotateDegree == 270) {
+        translate(3);
+        translate(1);
+    }
+    else if (rotateDegree == -90) {
+        translate(1);
+    }
+    else if (rotateDegree == -270) {
+        translate(4);
+    }
 }
 
 bool Position::deleteCell(Coordinates cell){
