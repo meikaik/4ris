@@ -5,6 +5,7 @@
 #include <string>
 
 class Xwindow {
+
   Display *d;
   Window w;
   int s;
@@ -31,6 +32,9 @@ class Xwindow {
 
   // Prints the first 10000 available fonts
   void showAvailableFonts();
+    
+  //Draw bitmap
+    void drawBitmap(char * filePath);
 };
 
 #endif

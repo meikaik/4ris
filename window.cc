@@ -1,11 +1,14 @@
 #include <X11/Xlib.h>
 #include <X11/Xutil.h>
+#include <X11/xpm.h>
 #include <iostream>
 #include <cstdlib>
 #include <string>
 #include <sstream>
 #include <unistd.h>
 #include "window.h"
+#include "back.XPM"
+
 
 using namespace std;
 
@@ -82,6 +85,27 @@ void Xwindow::drawString(int x, int y, string msg, int colour) {
   XDrawText(d, w, gc, x, y, &ti, 1);
   XSetForeground(d, gc, colours[Black]);
   XFlush(d);
+}
+
+
+void Xwindow::drawBitmap(char * filePath){
+    //Bitmap Variables
+    Pixmap bitmap, mask ;
+    XpmAttributes at;
+    
+    XSync(d, False);
+
+    //Load Bitmap
+    int rc =  XpmCreatePixmapFromData(d, w, _480664582230, &bitmap, &mask, NULL);
+
+    //Set Background
+    XSetBackground(d, gc, WhitePixel(d, DefaultScreen(d)));
+    
+    //Copy the bitmap
+    XCopyArea(d, bitmap, w, gc, 0, 0, 750, 540, 0, 0);
+   
+    //Flush pending requests
+    XFlush(d);
 }
 
 

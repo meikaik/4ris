@@ -33,6 +33,7 @@ public:
     Game(Score *);
     ~Game();
     void draw();
+    void updateDisplay();
     void start(std::string, bool, int);
     void levelUp();
     void levelDown();

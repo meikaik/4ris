@@ -24,7 +24,8 @@ ReadConsole::~ReadConsole() { //dtor
     delete gameScore;
 }
 
-void ReadConsole::startRead(string *file) { //startRead takes in commands from cin
+void ReadConsole::startRead(string *file) {
+    //startRead takes in commands from cin
     string tmp;
     string cmpSubString, sSubString;
     string s, numString = "";
@@ -154,6 +155,7 @@ void ReadConsole::restart() {
     currGame = new Game(gameScore); //create new Game ptr.
     currGame->start("", 0, 0);
     sequence(scriptFile); //take input from sequence file.
+    currGame->draw(); // Draw screen
 }
 void ReadConsole::hint() {
     currGame->hint(); //Game's hint

@@ -170,14 +170,14 @@ void GraphicsDisplay::drawCurrBlock(){
     //Stop if output mode is text only
     if (textOnly) return;
     
-    //Make old coordinates black
+    //Make old coordinates white
     for (int i = 0; i < oldblock.size(); i++){
         //Calculate x and y positions.
         x = oldblock[i].getX() * cellwidth;
         y = oldblock[i].getY() * cellwidth;
         
         //Make cell block black
-        x11Graphics.fillRectangle(x, y, 30, 30, x11Graphics.Black);
+        x11Graphics.fillRectangle(y, x, 30, 30, x11Graphics.White);
     }
     
     //Clear old block
@@ -187,7 +187,7 @@ void GraphicsDisplay::drawCurrBlock(){
     oldblock = currBoard->getNextPosition();
     
     //Get new block colour
-    colour = 0;
+    colour = getColour(currBoard->getNextBlock());
     
     //Draw new block
     //Make old coordinates black
@@ -197,7 +197,7 @@ void GraphicsDisplay::drawCurrBlock(){
         y = oldblock[i].getY() * cellwidth;
         
         //Make cell block black
-        x11Graphics.fillRectangle(x, y, cellwidth, cellwidth, colour);
+        x11Graphics.fillRectangle(y, x, cellwidth, cellwidth, colour);
     }
     
 }
@@ -212,8 +212,11 @@ void GraphicsDisplay::draw() {
     
     //Only draw game if out mode permits it
     if (textOnly == false){
-        //Draw black background
-        x11Graphics.fillRectangle(0, 0, 750, 540, x11Graphics.White);
+        //Draw white background
+        //x11Graphics.fillRectangle(0, 0, 750, 540, x11Graphics.White);
+        
+        //draw bitmap
+        x11Graphics.drawBitmap("back.xbm");
         
         //Draw remaining components
         drawGrid();
@@ -224,19 +227,19 @@ void GraphicsDisplay::draw() {
 }
 
 void GraphicsDisplay::drawScore() {
-    int xdef = 400, textHeight = 35;
+    int xdef = 523, textHeight = 188;
     
     //Get current/high score
     int cScore = currBoard->returnGameScore()->currentScore();
     int hScore = currBoard->returnGameScore()->currentHighScore();
     
     //Construct strings
-    string cMsg = "Score : " + to_string(cScore);
-    string hMsg = "High Score : " + to_string(hScore);
+    string cMsg = to_string(cScore);
+    string hMsg = to_string(hScore);
     
     //Draw Strings
-    x11Graphics.drawBigString(xdef - 20, textHeight + 30, cMsg, 2);
-    x11Graphics.drawBigString(xdef - 20, textHeight + 65, hMsg, 2);
+    x11Graphics.drawBigString(xdef, textHeight + 30, cMsg, 0);
+    x11Graphics.drawBigString(xdef + 87 , textHeight + 80, hMsg, 0);
     
 }
 
@@ -246,9 +249,6 @@ void GraphicsDisplay::drawNext() {
     int textHeight = y - 80;
     string blockString;
     
-    //Draw string
-    x11Graphics.drawBigString(xdef - 20, textHeight + 30, "Next Block", 2);
-
     //Get Char type of next block
     char nChar = currBoard->getNextBlock();
     
@@ -321,7 +321,7 @@ void GraphicsDisplay::drawGrid() {
     //Loop through each char in grid
     for (int i = 0; i < grid.length(); i++){
         //If char is apart of a block then draw it
-        if (grid[i] != ' '){
+        if (grid[i] != ' ' && grid[i] != '\n'){
             colour = getColour(grid[i]);
             x11Graphics.fillRectangle(x, y, cellwidth, cellwidth, colour);
         }
@@ -343,7 +343,7 @@ void GraphicsDisplay::drawGrid() {
 }
 
 void GraphicsDisplay::drawLevel() {
-    int xdef = 400, textHeight = 0;
+    int xdef = 510, textHeight = 135;
     int levelNum;
     string msg;
     
@@ -351,9 +351,9 @@ void GraphicsDisplay::drawLevel() {
     levelNum = currBoard->getLevel();
     
     //Make level string
-    msg = "Level : " + to_string(levelNum);
+    msg = to_string(levelNum);
     
-    x11Graphics.drawBigString(xdef - 20, textHeight + 30, msg, 2);
+    x11Graphics.drawBigString(xdef, textHeight + 35, msg, 0);
 }
 
 void GraphicsDisplay::drawError(std::string err) {

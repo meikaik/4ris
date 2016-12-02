@@ -82,6 +82,16 @@ void Game::draw(){
     if (!(outType) && printScreen) gDisplay.draw(); //Print Entire Grid
 }
 
+void Game::updateDisplay(){
+    //Print Game
+    tDisplay.draw();
+    
+    //Update current block
+    if (!(outType) && printScreen) gDisplay.drawCurrBlock(); //Print Changes to grid
+
+}
+
+
 void Game::makeMove(char moveVal) {
     try {
         if (theBoard.moveSinceClear == level.returnCountTillNew() &&
@@ -124,10 +134,17 @@ void Game::makeMove(char moveVal) {
                 theBoard.moveDown();
             }
         }
-    
-        //Draw entire screen
-        draw();
         
+        //Update board if move was not drop
+        if (moveVal < 5){
+            updateDisplay();
+        }
+        
+        //Draw entire frame if move is drop
+        if (moveVal == 5){
+            draw();
+        }
+    
         theBoard.endGameCheck();
     }
     catch (GameOver err){
