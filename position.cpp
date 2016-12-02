@@ -109,10 +109,10 @@ void Position::rotate(int degree){
     
     //Calculate Rotate degree
     if (degree == 90){
-        rDegree = 1;
+        rDegree = 3; // clockwise rotation
     }
     else {
-        rDegree = 3;
+        rDegree = 1; // counterclockwise rotation
     }
     
     //Rotate clockwise rdegree times
