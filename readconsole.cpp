@@ -74,6 +74,13 @@ void ReadConsole::startRead(string *file) {
             for (int i = 0; i < multipler; i++){
             move(pos);
             }
+            
+            //Apply gravity properties
+            if ((pos != 5) && ((currGame->getLevel() == 3 || (currGame->getLevel() == 4)))) {
+                for (int i=0; i < currGame->getWeight(); i++) {
+                    move(2);
+                }
+            }
         }
         else if( pos == 6){
             for (int i = 0; i < multipler; i++){

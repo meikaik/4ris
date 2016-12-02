@@ -91,7 +91,6 @@ void Game::updateDisplay(){
 
 }
 
-
 void Game::makeMove(char moveVal) {
     try {
         if (theBoard.moveSinceClear == level.returnCountTillNew() &&
@@ -129,12 +128,7 @@ void Game::makeMove(char moveVal) {
             default:
                 break;
         }
-        if ((moveVal != 5) && ((level.getLevel() == 3) || (level.getLevel() == 4))) {
-            for (int i=0; i<level.getWeight(); i++) {
-                theBoard.moveDown();
-            }
-        }
-        
+ 
         //Update board if move was not drop
         if (moveVal < 5){
             updateDisplay();
@@ -154,7 +148,6 @@ void Game::makeMove(char moveVal) {
     
 }
 
-
 void Game::makeRandom(std::string *blockString, bool ran){
     
     if(ran && !(blockString)){
@@ -171,4 +164,13 @@ void Game::makeRandom(std::string *blockString, bool ran){
     }
 }
 
+int Game::getLevel(){
+    //return level number
+    return level.getLevel();
+}
+
+int Game::getWeight(){
+    //return block weight
+    return level.getWeight();
+}
 

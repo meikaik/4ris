@@ -1,6 +1,4 @@
 Header search paths : 
 	/opt/X11/include
 Other Linker flags :
-	-I/usr/X11R6/include
-	-L/usr/X11R6/lib
-	-lX11
+	-I/usr/X11R6/include -L/usr/X11R6/lib -lX11 -lXpm
