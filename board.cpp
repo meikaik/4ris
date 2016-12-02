@@ -522,6 +522,11 @@ char Board::getNextBlock(){
     return nextBlockList[nextBlockList.size() - 2].type();
 }
 
+char Board::getCurrBlock(){
+    //Return nextblock char
+    return nextBlockList[nextBlockList.size() - 1].type();
+}
+
 void Board::clearList(){
     //Clear nextblocks
     nextBlockList.clear();

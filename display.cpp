@@ -170,14 +170,14 @@ void GraphicsDisplay::drawCurrBlock(){
     //Stop if output mode is text only
     if (textOnly) return;
     
-    //Make old coordinates white
+    //Erase old block
     for (int i = 0; i < oldblock.size(); i++){
         //Calculate x and y positions.
         x = oldblock[i].getX() * cellwidth;
         y = oldblock[i].getY() * cellwidth;
         
-        //Make cell block black
-        x11Graphics.fillRectangle(y, x, 30, 30, x11Graphics.White);
+        //Make cell block match background
+        x11Graphics.drawPortionOfBitmap(y, x, cellwidth);
     }
     
     //Clear old block
@@ -187,7 +187,7 @@ void GraphicsDisplay::drawCurrBlock(){
     oldblock = currBoard->getNextPosition();
     
     //Get new block colour
-    colour = getColour(currBoard->getNextBlock());
+    colour = getColour(currBoard->getCurrBlock());
     
     //Draw new block
     //Make old coordinates black

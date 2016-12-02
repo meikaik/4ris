@@ -91,7 +91,6 @@ void Xwindow::drawString(int x, int y, string msg, int colour) {
 void Xwindow::drawBitmap(char * filePath){
     //Bitmap Variables
     Pixmap bitmap, mask ;
-    XpmAttributes at;
     
     XSync(d, False);
 
@@ -104,6 +103,25 @@ void Xwindow::drawBitmap(char * filePath){
     //Copy the bitmap
     XCopyArea(d, bitmap, w, gc, 0, 0, 750, 540, 0, 0);
    
+    //Flush pending requests
+    XFlush(d);
+}
+
+void Xwindow::drawPortionOfBitmap(int x, int y, int cellWidth){
+    //Bitmap Variables
+    Pixmap bitmap, mask ;
+    
+    XSync(d, False);
+    
+    //Load Bitmap
+    int rc =  XpmCreatePixmapFromData(d, w, _480664582230, &bitmap, &mask, NULL);
+    
+    //Set Background
+    XSetBackground(d, gc, WhitePixel(d, DefaultScreen(d)));
+    
+    //Copy the bitmap
+    XCopyArea(d, bitmap, w, gc, x, y, cellWidth, cellWidth, x , y);
+    
     //Flush pending requests
     XFlush(d);
 }

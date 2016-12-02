@@ -35,6 +35,9 @@ class Xwindow {
     
   //Draw bitmap
     void drawBitmap(char * filePath);
+    
+  //Draw Portion of bitmap0
+    void drawPortionOfBitmap(int x, int y, int cellWidth);
 };
 
 #endif

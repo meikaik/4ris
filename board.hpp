@@ -55,6 +55,7 @@ public:
     int moveSinceClear;
     Score * returnGameScore();
     char getNextBlock();
+    char getCurrBlock();
     bool isEmpty ();
     
     
