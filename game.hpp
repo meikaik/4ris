@@ -41,6 +41,8 @@ public:
     void hint();
     void makeMove(char);
     void makeRandom(std::string *, bool);
+    int getLevel();
+    int getWeight();
     
 };
 
