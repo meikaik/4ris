@@ -17,6 +17,7 @@
 #include "position.hpp"
 #include "window.h"
 
+
 class Board;
 
 class GameDisplay {
@@ -68,7 +69,7 @@ class GraphicsDisplay : public GameDisplay {
     void drawGrid() override;
     void drawLevel() override;
     void drawError(std::string) override;
-    bool textOnly = false; 
+    bool textOnly = false;
     
 };
 
