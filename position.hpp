@@ -34,6 +34,7 @@ class Position {
     std::vector<Coordinates> currPosition;
     int rotateDegree = 0;
     Coordinates origin;
+    bool shifted = false;
     
     public :
     Position(char bType);
@@ -44,6 +45,7 @@ class Position {
     std::vector<Coordinates> getPosition ();
     void translate (int dir);
     void rotate(int degree);
+    void rotateIBlock();
     bool deleteCell(Coordinates cell);
     int getRotate();
     int getHeight();

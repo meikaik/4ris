@@ -55,7 +55,7 @@ Position::Position(char bType) : rotateDegree(0), origin(4.0f,1.0f){
     else if (bType == 'I'){
         Coordinates temp[4] = {{4,0}, {4,1}, {4,2}, {4,3}};
         currPosition.insert(currPosition.end(), temp, temp + 4);
-        origin.setX2(4.5f);
+        origin.setY2(1.5);
     }
     else if (bType == '*'){
         currPosition.push_back(Coordinates(2, 5));
@@ -98,17 +98,45 @@ void Position::translate (int dir){
     origin.setX2(origin.getX2() + translateX);
     origin.setY2(origin.getY2() + translateY);
 }
+
+void Position::rotateIBlock(){
+    //Check for I block shift
+    if (shifted  == false){
+        //Loop through all values
+        for (int i = 0; i < 4; i++){
+            currPosition[i].setX(currPosition[i].getX() - i);
+            currPosition[i].setY(currPosition[0].getY());
+        }
+        
+        //set shifted to true
+        shifted = true;
+        return;
+    }
+    else{
+        //Loop through all values
+        for (int i = 0; i < 4; i++){
+            currPosition[i].setX(currPosition[i].getX() + i);
+            currPosition[i].setY(currPosition[i].getY() + i);
+        }
+        
+        //set shifted to true
+        shifted = false;
+        return;
+    }
+
+}
+
 void Position::rotate(int degree){
     float x, y;
     float calcX, calcY, rDegree = 0;
     
     //Set degree to  90 if it is not valid
-    if (degree != 90 && degree != -90 && degree != 0){
+    if (degree != 90 && degree != -90 && degree != 0 && degree != 999){
         degree = 90;
     }
     
     //Calculate Rotate degree
-    if (degree == 90){
+    if (degree == 90 || degree == 100){
         rDegree = 3; // clockwise rotation
     }
     else {
@@ -142,34 +170,38 @@ void Position::rotate(int degree){
         }
     }
     
+
+    
     //Increment rotate counter
     rotateDegree += degree;
-    if (rotateDegree == -360) {
-        translate(1);
+    
+    if (rotateDegree == -360 && degree == -90){
+        translate(3);
         translate(2);
-        translate(3);
     }
-    if ((rotateDegree == 360) || (rotateDegree == -360)) {
-        rotateDegree = 0;
-        translate(3);
-    }
-    else if (rotateDegree == 90) {
+    if(rotateDegree >= 360 || rotateDegree <= -360) rotateDegree = 0;
+    
+    
+    if (rotateDegree == 90 && degree == 90){
+        translate(4);
         translate(1);
+    }
+    else if (rotateDegree == 180 && degree == 90){
+        translate(2);
+    }
+    else if (rotateDegree == -90 && degree == -90){
+        translate(1);
+    }
+    else if (rotateDegree == 0 && degree == 90){
+        translate(3);
+    }
+    else if (rotateDegree == -180 && degree == 90){
+        translate(2);
+    }
+    else if (rotateDegree == -270 && degree == -90){
         translate(4);
     }
-    else if (rotateDegree == 180) {
-        translate(4);
-        translate(2);
-        translate(2);
-    }
-    else if (rotateDegree == 270) {
-        translate(3);
-        translate(1);
-    }
-    else if (rotateDegree == -90) {
-        translate(1);
-    }
-    else if (rotateDegree == -270) {
+    else if (rotateDegree == 90 && degree == -90){
         translate(4);
     }
 }
