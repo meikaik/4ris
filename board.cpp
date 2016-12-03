@@ -38,11 +38,20 @@ void Board::endGameCheck(){
     
     //Check to see if any blocks are in the first row
     for (int i = 0; i < 11; i++){
+        if (grid[4][i] != ' '){
+            //Throw game over
+            throw GameOver{"Game Over : You Lose!"};
+        }
+    }
+    
+    //Check to see if any blocks are in the row before the first
+    for (int i = 0; i < 11; i++){
         if (grid[3][i] != ' '){
             //Throw game over
             throw GameOver{"Game Over : You Lose!"};
         }
     }
+
 }
 
 void Board::setLevel(int level){
