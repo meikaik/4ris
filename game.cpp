@@ -11,16 +11,22 @@
 
 using namespace std;
 
-Game::Game(Score* gameScore): gameScore{gameScore}, level{0}, gDisplay{&theBoard}, theBoard{gameScore, &level}, tDisplay{&theBoard} {
+Game::Game(Score* gameScore): gameScore{gameScore}, level{0}, theBoard{gameScore, &level}, tDisplay{&theBoard} {
 }
 
 
 Game::~Game() {
+    delete gDisplay;
 }
 
 void Game::start(string file, bool isTextOnly, int startLevel) {
+    //Set output mode
     outType = isTextOnly;
-    gDisplay.textOnly = isTextOnly;
+    
+    //Open X11 window only if mode is not text
+    if (!(outType)) gDisplay = new GraphicsDisplay(&theBoard);
+    
+    //Set starting level
     this->level.setLevel(startLevel);
 }
 
@@ -62,12 +68,12 @@ void Game::hint() {
         
         //Print error
         tDisplay.drawError(msg);
-        if (!(outType)) gDisplay.drawError(msg);
+        if (!(outType)) gDisplay->drawError(msg);
     }
     
     //Update graphics display
     if (!(outType)) {
-        gDisplay.drawHint(pos);
+        gDisplay->drawHint(pos);
     }
     
     //Update textdisplay
@@ -79,7 +85,7 @@ void Game::draw(){
     tDisplay.draw();
     
     //Draw game only if out type permits its
-    if (!(outType) && printScreen) gDisplay.draw(); //Print Entire Grid
+    if (!(outType) && printScreen) gDisplay->draw(); //Print Entire Grid
 }
 
 void Game::updateDisplay(){
@@ -87,7 +93,7 @@ void Game::updateDisplay(){
     tDisplay.draw();
     
     //Update current block
-    if (!(outType) && printScreen) gDisplay.drawCurrBlock(); //Print Changes to grid
+    if (!(outType) && printScreen) gDisplay->drawCurrBlock(); //Print Changes to grid
 
 }
 

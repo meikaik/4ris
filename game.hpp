@@ -15,6 +15,7 @@
 #include "score.hpp"
 #include "board.hpp"
 #include "display.hpp"
+#include <memory>
 #include "position.hpp"
 
 
@@ -24,7 +25,8 @@ class Game {
     Level level;
     Board theBoard;
     TextDisplay tDisplay;
-    GraphicsDisplay gDisplay;
+    GraphicsDisplay * gDisplay;
+    std::unique_ptr<GraphicsDisplay> gd;
     bool graphics;
     Score *gameScore;
     bool outType;
