@@ -66,7 +66,6 @@ Xwindow::Xwindow(int width, int height): width(width), height(height) {
 Xwindow::~Xwindow() {
   XFreeGC(d, gc);
   XCloseDisplay(d);
-  free(back);
 }
 
 void Xwindow::fillRectangle(int x, int y, int width, int height, int colour) {

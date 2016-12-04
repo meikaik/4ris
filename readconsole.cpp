@@ -37,7 +37,6 @@ ReadConsole::ReadConsole(Score *gameScore, int startLevel, string scriptFile, bo
     
     ReadConsole::~ReadConsole() { //dtor
         delete currGame;
-        delete gameScore;
     }
     
     void ReadConsole::startRead(string *file) {
