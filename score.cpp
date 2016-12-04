@@ -33,14 +33,19 @@ void Score::resetCurrScore() {
     currScore =0;
 }
 
-void playMusic::playWav(std::string wavFile){
-    //Create command
-    std::string command = "afplay " + wavFile;
+void playMusic::playWav(std::string wavFile, bool bonusMode){
+    //Create command string
+    std::string command = "";
     
-    //Play music using system based on os
+    //Set command based on os
     #ifdef __APPLE__
-    system(command.c_str());
+    command = "afplay " + wavFile;
+    #elif __linux__
+    command = "aplay " + wavFile;
     #endif
+    
+    //Play sound effect only if bonus mode is active
+    if (bonusMode) system(command.c_str());
 }
 
 

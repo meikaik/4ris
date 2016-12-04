@@ -149,7 +149,7 @@ void Game::makeMove(char moveVal) {
         }
         
         //Play drop sound
-        if (moveVal == 5) gameScore->music.playWav("fall.wav");
+        if (moveVal == 5) gameScore->music.playWav("fall.wav", gameScore->bonusMode);
     
         
     }

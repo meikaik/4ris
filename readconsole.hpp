@@ -12,6 +12,8 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <unistd.h>
+#include <ncurses.h>
 #include "game.hpp"
 #include "score.hpp"
 

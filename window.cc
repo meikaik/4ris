@@ -7,7 +7,7 @@
 #include <sstream>
 #include <unistd.h>
 #include "window.h"
-#include "back.XPM"
+#include "back.xpm"
 
 
 using namespace std;

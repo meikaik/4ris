@@ -14,7 +14,7 @@
 #include <unistd.h>
 
 struct playMusic {
-    void playWav(std::string);
+    void playWav(std::string, bool);
 };
 
 struct GameOver {
@@ -32,6 +32,8 @@ class Score {
     void decreaseScore(int scoreVal);
     int currentHighScore();
     void resetCurrScore();
+    bool bonusMode;
+    bool keyMode;
     playMusic &music;
 };
 

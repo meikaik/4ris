@@ -185,18 +185,18 @@ void Position::rotate(int degree){
         translate(2);
     }
     else if (modDegree == 270 && degree == 90){
-        translate(2);
+        //translate(2);
     }
     else if (modDegree == 0 && degree == 90){
-        translate(4);
+        //translate(4);
         translate(3);
     }
     else if (modDegree == -90 && degree == -90){
         translate(1);
-        translate(2);
+        //translate(2);
     }
     else if (modDegree == -180 && degree == -90){
-        translate(4);
+        //translate(4);
     }
     else if (modDegree == -270 && degree == -90){
         translate(4);
@@ -206,7 +206,7 @@ void Position::rotate(int degree){
         translate(2);
     }
     else if (modDegree == -90 && degree == 90){
-        translate(2);
+        //translate(2);
     }
     else if (modDegree == -180 && degree == 90){
         translate(2);
@@ -220,10 +220,11 @@ void Position::rotate(int degree){
     }
     else if (modDegree == 180 && degree == -90){
         translate(4);
+        translate(2);
     }
     else if (modDegree == 270 && degree == -90){
         translate(1);
-        translate(2);
+        //translate(2);
     }
 }
 

@@ -402,7 +402,7 @@ void Board::clearRow(int rowNum){
     }
     
     //Play clear line sound
-    gameScore->music.playWav("clear.wav");
+    gameScore->music.playWav("clear.wav", gameScore->bonusMode);
 }
 
 void Board::newNextBlock(string *blockStr){
