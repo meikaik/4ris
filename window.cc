@@ -66,6 +66,7 @@ Xwindow::Xwindow(int width, int height): width(width), height(height) {
 Xwindow::~Xwindow() {
   XFreeGC(d, gc);
   XCloseDisplay(d);
+  free(back);
 }
 
 void Xwindow::fillRectangle(int x, int y, int width, int height, int colour) {
@@ -90,18 +91,21 @@ void Xwindow::drawString(int x, int y, string msg, int colour) {
 
 void Xwindow::drawBitmap(char * filePath){
     //Bitmap Variables
-    Pixmap bitmap, mask ;
+    Pixmap bitmap;
     
     XSync(d, False);
 
     //Load Bitmap
-    int rc =  XpmCreatePixmapFromData(d, w,back, &bitmap, &mask, NULL);
+    int rc =  XpmCreatePixmapFromData(d, w,back, &bitmap, NULL, NULL);
 
     //Set Background
     XSetBackground(d, gc, WhitePixel(d, DefaultScreen(d)));
     
     //Copy the bitmap
     XCopyArea(d, bitmap, w, gc, 0, 0, 750, 540, 0, 0);
+    
+    //Free bitmap
+    XFreePixmap(d, bitmap);
    
     //Flush pending requests
     XFlush(d);
@@ -109,12 +113,12 @@ void Xwindow::drawBitmap(char * filePath){
 
 void Xwindow::drawPortionOfBitmap(int x, int y, int cellWidth){
     //Bitmap Variables
-    Pixmap bitmap, mask ;
+    Pixmap bitmap;
     
     XSync(d, False);
     
     //Load Bitmap
-    int rc =  XpmCreatePixmapFromData(d, w,back, &bitmap, &mask, NULL);
+    int rc =  XpmCreatePixmapFromData(d, w,back, &bitmap, NULL, NULL);
     
     //Set Background
     XSetBackground(d, gc, WhitePixel(d, DefaultScreen(d)));
@@ -122,8 +126,12 @@ void Xwindow::drawPortionOfBitmap(int x, int y, int cellWidth){
     //Copy the bitmap
     XCopyArea(d, bitmap, w, gc, x, y, cellWidth, cellWidth, x , y);
     
+    //Free bitmap
+    XFreePixmap(d, bitmap);
+    
     //Flush pending requests
     XFlush(d);
+  
 }
 
 
@@ -141,6 +149,7 @@ void Xwindow::drawBigString(int x, int y, string msg, int colour) {
   ti.font = f->fid;
   XDrawText(d, w, gc, x, y, &ti, 1);
   XSetForeground(d, gc, colours[Black]);
+  XFreeFont(d, f);
   XFlush(d);
 }
 
