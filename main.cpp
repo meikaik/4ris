@@ -68,7 +68,6 @@ int main(int argc, const char *argv[]) { //program takes cmd arguments
     srand(seed); //creates a random order for subsequent rands based on seed
     ReadConsole rc (&indefiniteScore, startLevel, scriptFile, textMode); //Readconsole's ctor
     rc.startRead(nullptr); //startRead is initilized to take in commands.
-    system("killall afplay");
     return 0;
     
 }
