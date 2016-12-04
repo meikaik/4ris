@@ -358,7 +358,7 @@ void GraphicsDisplay::drawLevel() {
 
 void GraphicsDisplay::drawError(std::string err) {
     //Print Error
-    x11Graphics.drawString(150, 270, err, 2);
+    x11Graphics.drawString(100, 270, err, 0);
     
 }
 

@@ -135,6 +135,9 @@ void Game::makeMove(char moveVal) {
                 break;
         }
  
+        //Check for end gane
+        theBoard.endGameCheck();
+        
         //Update board if move was not drop
         if (moveVal < 5){
             updateDisplay();
@@ -144,11 +147,15 @@ void Game::makeMove(char moveVal) {
         if (moveVal == 5){
             draw();
         }
+        
+        //Play drop sound
+        if (moveVal == 5) gameScore->music.playWav("fall.wav");
     
-        theBoard.endGameCheck();
+        
     }
     catch (GameOver err){
         tDisplay.drawError(err.msg);
+        if (!outType) gDisplay->drawError(err.msg);
         throw;
     }
     

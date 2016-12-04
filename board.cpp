@@ -306,7 +306,6 @@ void Board::drop(){
     
     //Check rows for filled rows
     checkRows();
-    
 }
 
 void Board::rotate(int degree){
@@ -401,6 +400,9 @@ void Board::clearRow(int rowNum){
     for (int i = 0; i < 11; i++){
         grid[0].emplace_back(' ');
     }
+    
+    //Play clear line sound
+    gameScore->music.playWav("clear.wav");
 }
 
 void Board::newNextBlock(string *blockStr){

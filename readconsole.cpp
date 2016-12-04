@@ -10,6 +10,7 @@
 #include <fstream>
 #include <stdexcept>
 
+
 using namespace std;
 
 ReadConsole::ReadConsole(Score *gameScore, int startLevel, string scriptFile, bool textMode): gameScore{gameScore}, startLevel(startLevel),  scriptFile{scriptFile}, textMode{textMode} {
@@ -172,6 +173,8 @@ void ReadConsole::move(int moveCommand) {
     currGame->makeMove(moveCommand); //check valid move.
     }
     catch (...){
+    
+        gameScore->music.playWav("over.wav"); //Play gameover sound
         restart(); //restart game if exn caught.
     }
 }

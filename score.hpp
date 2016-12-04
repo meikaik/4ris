@@ -11,6 +11,11 @@
 
 #include <iostream>
 #include <string>
+#include <unistd.h>
+
+struct playMusic {
+    void playWav(std::string);
+};
 
 struct GameOver {
     std::string msg;
@@ -20,12 +25,15 @@ class Score {
     int currScore = 0, highScore = 0;
     
     public :
+    Score (playMusic &play);
     void increaseScore(int scoreVal);
     void updateHighScore();
     int currentScore();
     void decreaseScore(int scoreVal);
     int currentHighScore();
     void resetCurrScore();
+    playMusic &music;
 };
+
 
 #endif /* score_hpp */

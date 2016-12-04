@@ -9,6 +9,8 @@
 #include "score.hpp"
 
 
+Score::Score(playMusic &play) : music(play){}
+
 void Score::increaseScore(int scoreVal){ //increases score.
     currScore += scoreVal;
     updateHighScore(); //call update hs
@@ -30,3 +32,16 @@ int Score::currentHighScore() { return highScore;} //hs accessor
 void Score::resetCurrScore() {
     currScore =0;
 }
+
+void playMusic::playWav(std::string wavFile){
+    //Create command
+    std::string command = "afplay " + wavFile;
+    
+    //Play music using system based on os
+    #ifdef __APPLE__
+    system(command.c_str());
+    #endif
+}
+
+
+

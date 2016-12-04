@@ -123,12 +123,12 @@ void Position::rotateIBlock(){
         shifted = false;
         return;
     }
-
 }
 
 void Position::rotate(int degree){
     float x, y;
     float calcX, calcY, rDegree = 0;
+    int modDegree;
     
     //Set degree to  90 if it is not valid
     if (degree != 90 && degree != -90 && degree != 0 && degree != 999){
@@ -173,34 +173,57 @@ void Position::rotate(int degree){
     //Increment rotate counter
     rotateDegree += degree;
     
-    if (rotateDegree == -360 && degree == -90){
+    //Get remainder
+    modDegree = rotateDegree % 360;
+    
+    //Shift to maintain left and right corners
+    if (modDegree == 90 && degree == 90){
+        translate(1);
+        translate(4);
+    }
+    else if (modDegree == 180 && degree == 90){
+        translate(2);
+    }
+    else if (modDegree == 270 && degree == 90){
+        translate(2);
+    }
+    else if (modDegree == 0 && degree == 90){
+        translate(4);
+        translate(3);
+    }
+    else if (modDegree == -90 && degree == -90){
+        translate(1);
+        translate(2);
+    }
+    else if (modDegree == -180 && degree == -90){
+        translate(4);
+    }
+    else if (modDegree == -270 && degree == -90){
+        translate(4);
+    }
+    else if (modDegree == 0 && degree == -90){
         translate(3);
         translate(2);
     }
-    if(rotateDegree >= 360 || rotateDegree <= -360) rotateDegree = 0;
-    
-    
-    if (rotateDegree == 90 && degree == 90){
-        translate(4);
-        translate(1);
-    }
-    else if (rotateDegree == 180 && degree == 90){
+    else if (modDegree == -90 && degree == 90){
         translate(2);
     }
-    else if (rotateDegree == -90 && degree == -90){
-        translate(1);
-    }
-    else if (rotateDegree == 0 && degree == 90){
-        translate(3);
-    }
-    else if (rotateDegree == -180 && degree == 90){
+    else if (modDegree == -180 && degree == 90){
         translate(2);
     }
-    else if (rotateDegree == -270 && degree == -90){
+    else if (modDegree == -270 && degree == 90){
+        translate(1);
         translate(4);
     }
-    else if (rotateDegree == 90 && degree == -90){
+    else if (modDegree == 90 && degree == -90){
         translate(4);
+    }
+    else if (modDegree == 180 && degree == -90){
+        translate(4);
+    }
+    else if (modDegree == 270 && degree == -90){
+        translate(1);
+        translate(2);
     }
 }
 
