@@ -95,7 +95,7 @@ void Xwindow::drawBitmap(char * filePath){
     XSync(d, False);
 
     //Load Bitmap
-    int rc =  XpmCreatePixmapFromData(d, w, _480664582230, &bitmap, &mask, NULL);
+    int rc =  XpmCreatePixmapFromData(d, w,back, &bitmap, &mask, NULL);
 
     //Set Background
     XSetBackground(d, gc, WhitePixel(d, DefaultScreen(d)));
@@ -114,7 +114,7 @@ void Xwindow::drawPortionOfBitmap(int x, int y, int cellWidth){
     XSync(d, False);
     
     //Load Bitmap
-    int rc =  XpmCreatePixmapFromData(d, w, _480664582230, &bitmap, &mask, NULL);
+    int rc =  XpmCreatePixmapFromData(d, w,back, &bitmap, &mask, NULL);
     
     //Set Background
     XSetBackground(d, gc, WhitePixel(d, DefaultScreen(d)));
