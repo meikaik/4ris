@@ -16,7 +16,6 @@ Game::Game(Score* gameScore): gameScore{gameScore}, level{0}, theBoard{gameScore
 
 
 Game::~Game() {
-    delete gDisplay;
 }
 
 void Game::start(string file, bool isTextOnly, int startLevel) {
@@ -24,8 +23,7 @@ void Game::start(string file, bool isTextOnly, int startLevel) {
     outType = isTextOnly;
     
     //Open X11 window only if mode is not text
-    if (!(outType)) gDisplay = new GraphicsDisplay(&theBoard);
-    
+    if (!(outType)) gDisplay = make_shared<GraphicsDisplay>(&theBoard);
     //Set starting level
     this->level.setLevel(startLevel);
 }

@@ -10,7 +10,6 @@
 using namespace std;
 
 GameDisplay::~GameDisplay(){
-    
 }
 
 GameDisplay::GameDisplay(Board *theBoard): currBoard{theBoard}{}

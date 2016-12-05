@@ -25,8 +25,7 @@ class Game {
     Level level;
     Board theBoard;
     TextDisplay tDisplay;
-    GraphicsDisplay * gDisplay;
-    std::unique_ptr<GraphicsDisplay> gd;
+    std::shared_ptr<GraphicsDisplay> gDisplay;
     bool graphics;
     Score *gameScore;
     bool outType;

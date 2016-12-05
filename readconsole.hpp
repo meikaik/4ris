@@ -14,11 +14,12 @@
 #include <vector>
 #include <unistd.h>
 #include <ncurses.h>
+#include <memory>
 #include "game.hpp"
 #include "score.hpp"
 
 class ReadConsole {
-    Game *currGame;
+    std::shared_ptr<Game> currGame;
     Score *gameScore;
     int startLevel;
     std::string scriptFile;

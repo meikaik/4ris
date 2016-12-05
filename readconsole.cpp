@@ -8,6 +8,7 @@
 
 #include "readconsole.hpp"
 #include <fstream>
+#include <memory>
 #include <stdexcept>
 
 
@@ -29,14 +30,12 @@ bool keyPressed(){
 }
 
 ReadConsole::ReadConsole(Score *gameScore, int startLevel, string scriptFile, bool textMode): gameScore{gameScore}, startLevel(startLevel),  scriptFile{scriptFile}, textMode{textMode} {
-    currGame = nullptr;
     cout << "Quadris v0.01 - By : Harsh, Meikai, and Karam" << endl;
     cout << "Enter commands or type 'help' for a list of commands" << endl;
     startGame();
     } // readconsole ctor initalizes fields, and calls startGame fn.
     
     ReadConsole::~ReadConsole() { //dtor
-        delete currGame;
     }
     
     void ReadConsole::startRead(string *file) {
@@ -209,10 +208,9 @@ ReadConsole::ReadConsole(Score *gameScore, int startLevel, string scriptFile, bo
         currGame->replaceBlock(block); //call Game's replace block.
     }
     void ReadConsole::restart() {
-        delete currGame; //delete game ptr
         startLevel = 0; //default lvl
         gameScore->resetCurrScore(); //reset gameScore.
-        currGame = new Game(gameScore); //create new Game ptr.
+        currGame = make_shared<Game>(gameScore);
         currGame->start("", 0, 0);
         sequence(scriptFile); //take input from sequence file.
         currGame->draw(); // Draw screen
@@ -241,8 +239,8 @@ ReadConsole::ReadConsole(Score *gameScore, int startLevel, string scriptFile, bo
         }
     }
     void ReadConsole::startGame() {
-        delete currGame;
-        currGame = new Game(gameScore); //create new game ptr.
+        // create a new game shared ptr
+        currGame = make_shared<Game>(gameScore);
         currGame->start("", textMode, startLevel); //call Game's start game with current lvl.
         if (startLevel == 0) {
             sequence(scriptFile); //at level 0 set sequence file to ctors val.
