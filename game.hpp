@@ -15,6 +15,7 @@
 #include "score.hpp"
 #include "board.hpp"
 #include "display.hpp"
+#include <memory>
 #include "position.hpp"
 
 
@@ -24,7 +25,7 @@ class Game {
     Level level;
     Board theBoard;
     TextDisplay tDisplay;
-    GraphicsDisplay gDisplay;
+    std::shared_ptr<GraphicsDisplay> gDisplay;
     bool graphics;
     Score *gameScore;
     bool outType;
@@ -41,6 +42,8 @@ public:
     void hint();
     void makeMove(char);
     void makeRandom(std::string *, bool);
+    int getLevel();
+    int getWeight();
     
 };
 

@@ -36,13 +36,16 @@ void Board::endGameCheck(){
         throw GameOver{"Game Over : No More Blocks!"};
     }
     
-    //Check to see if any blocks are in the first row
-    for (int i = 0; i < 11; i++){
-        if (grid[3][i] != ' '){
-            //Throw game over
+    //Get positions
+    vector<Coordinates> currPos = nextBlockList.back().getPos();
+    
+    for (int i = 0; i < currPos.size(); i++){
+        if (grid[currPos[i].getX()][currPos[i].getY()] != ' '){
             throw GameOver{"Game Over : You Lose!"};
         }
     }
+    
+    
 }
 
 void Board::setLevel(int level){
@@ -297,7 +300,6 @@ void Board::drop(){
     
     //Check rows for filled rows
     checkRows();
-    
 }
 
 void Board::rotate(int degree){
@@ -392,6 +394,9 @@ void Board::clearRow(int rowNum){
     for (int i = 0; i < 11; i++){
         grid[0].emplace_back(' ');
     }
+    
+    //Play clear line sound
+    gameScore->music.playWav("clear.wav", gameScore->bonusMode);
 }
 
 void Board::newNextBlock(string *blockStr){

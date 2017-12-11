@@ -30,6 +30,10 @@ void Block::rotateBlock(int degree){
     
     //Stop if block type is O
     if (bType == 'O') return;
+    if (bType == 'I') {
+        currPosition.rotateIBlock();
+        return;
+    }
     
     //Rotate Block
     currPosition.rotate(degree);

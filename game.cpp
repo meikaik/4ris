@@ -11,7 +11,7 @@
 
 using namespace std;
 
-Game::Game(Score* gameScore): gameScore{gameScore}, level{0}, gDisplay{&theBoard}, theBoard{gameScore, &level}, tDisplay{&theBoard} {
+Game::Game(Score* gameScore): gameScore{gameScore}, level{0}, theBoard{gameScore, &level}, tDisplay{&theBoard} {
 }
 
 
@@ -19,8 +19,12 @@ Game::~Game() {
 }
 
 void Game::start(string file, bool isTextOnly, int startLevel) {
+    //Set output mode
     outType = isTextOnly;
-    gDisplay.textOnly = isTextOnly;
+    
+    //Open X11 window only if mode is not text
+    if (!(outType)) gDisplay = make_shared<GraphicsDisplay>(&theBoard);
+    //Set starting level
     this->level.setLevel(startLevel);
 }
 
@@ -62,12 +66,12 @@ void Game::hint() {
         
         //Print error
         tDisplay.drawError(msg);
-        if (!(outType)) gDisplay.drawError(msg);
+        if (!(outType)) gDisplay->drawError(msg);
     }
     
     //Update graphics display
     if (!(outType)) {
-        gDisplay.drawHint(pos);
+        gDisplay->drawHint(pos);
     }
     
     //Update textdisplay
@@ -79,7 +83,7 @@ void Game::draw(){
     tDisplay.draw();
     
     //Draw game only if out type permits its
-    if (!(outType) && printScreen) gDisplay.draw(); //Print Entire Grid
+    if (!(outType) && printScreen) gDisplay->draw(); //Print Entire Grid
 }
 
 void Game::updateDisplay(){
@@ -87,10 +91,9 @@ void Game::updateDisplay(){
     tDisplay.draw();
     
     //Update current block
-    if (!(outType) && printScreen) gDisplay.drawCurrBlock(); //Print Changes to grid
+    if (!(outType) && printScreen) gDisplay->drawCurrBlock(); //Print Changes to grid
 
 }
-
 
 void Game::makeMove(char moveVal) {
     try {
@@ -129,11 +132,9 @@ void Game::makeMove(char moveVal) {
             default:
                 break;
         }
-        if ((moveVal != 5) && ((level.getLevel() == 3) || (level.getLevel() == 4))) {
-            for (int i=0; i<level.getWeight(); i++) {
-                theBoard.moveDown();
-            }
-        }
+ 
+        //Check for end gane
+        theBoard.endGameCheck();
         
         //Update board if move was not drop
         if (moveVal < 5){
@@ -144,16 +145,19 @@ void Game::makeMove(char moveVal) {
         if (moveVal == 5){
             draw();
         }
+        
+        //Play drop sound
+        if (moveVal == 5) gameScore->music.playWav("fall.wav", gameScore->bonusMode);
     
-        theBoard.endGameCheck();
+        
     }
     catch (GameOver err){
         tDisplay.drawError(err.msg);
+        if (!outType) gDisplay->drawError(err.msg);
         throw;
     }
     
 }
-
 
 void Game::makeRandom(std::string *blockString, bool ran){
     
@@ -171,4 +175,13 @@ void Game::makeRandom(std::string *blockString, bool ran){
     }
 }
 
+int Game::getLevel(){
+    //return level number
+    return level.getLevel();
+}
+
+int Game::getWeight(){
+    //return block weight
+    return level.getWeight();
+}
 

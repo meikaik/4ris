@@ -7,7 +7,7 @@
 #include <sstream>
 #include <unistd.h>
 #include "window.h"
-#include "back.XPM"
+#include "back.xpm"
 
 
 using namespace std;
@@ -90,18 +90,21 @@ void Xwindow::drawString(int x, int y, string msg, int colour) {
 
 void Xwindow::drawBitmap(char * filePath){
     //Bitmap Variables
-    Pixmap bitmap, mask ;
+    Pixmap bitmap;
     
     XSync(d, False);
 
     //Load Bitmap
-    int rc =  XpmCreatePixmapFromData(d, w, _480664582230, &bitmap, &mask, NULL);
+    int rc =  XpmCreatePixmapFromData(d, w,back, &bitmap, NULL, NULL);
 
     //Set Background
     XSetBackground(d, gc, WhitePixel(d, DefaultScreen(d)));
     
     //Copy the bitmap
     XCopyArea(d, bitmap, w, gc, 0, 0, 750, 540, 0, 0);
+    
+    //Free bitmap
+    XFreePixmap(d, bitmap);
    
     //Flush pending requests
     XFlush(d);
@@ -109,12 +112,12 @@ void Xwindow::drawBitmap(char * filePath){
 
 void Xwindow::drawPortionOfBitmap(int x, int y, int cellWidth){
     //Bitmap Variables
-    Pixmap bitmap, mask ;
+    Pixmap bitmap;
     
     XSync(d, False);
     
     //Load Bitmap
-    int rc =  XpmCreatePixmapFromData(d, w, _480664582230, &bitmap, &mask, NULL);
+    int rc =  XpmCreatePixmapFromData(d, w,back, &bitmap, NULL, NULL);
     
     //Set Background
     XSetBackground(d, gc, WhitePixel(d, DefaultScreen(d)));
@@ -122,8 +125,12 @@ void Xwindow::drawPortionOfBitmap(int x, int y, int cellWidth){
     //Copy the bitmap
     XCopyArea(d, bitmap, w, gc, x, y, cellWidth, cellWidth, x , y);
     
+    //Free bitmap
+    XFreePixmap(d, bitmap);
+    
     //Flush pending requests
     XFlush(d);
+  
 }
 
 
@@ -141,6 +148,7 @@ void Xwindow::drawBigString(int x, int y, string msg, int colour) {
   ti.font = f->fid;
   XDrawText(d, w, gc, x, y, &ti, 1);
   XSetForeground(d, gc, colours[Black]);
+  XFreeFont(d, f);
   XFlush(d);
 }
 

@@ -10,7 +10,6 @@
 using namespace std;
 
 GameDisplay::~GameDisplay(){
-    
 }
 
 GameDisplay::GameDisplay(Board *theBoard): currBoard{theBoard}{}
@@ -358,8 +357,8 @@ void GraphicsDisplay::drawLevel() {
 
 void GraphicsDisplay::drawError(std::string err) {
     //Print Error
-    x11Graphics.drawString(150, 270, err, 2);
-
+    x11Graphics.drawString(100, 270, err, 0);
+    
 }
 
 void GraphicsDisplay::drawHint(std::vector<Coordinates> &pos){
@@ -379,6 +378,7 @@ void GraphicsDisplay::drawHint(std::vector<Coordinates> &pos){
         x11Graphics.fillRectangle(y, x, cellwidth, cellwidth, x11Graphics.Black);
     }
 }
+
 
 
 
