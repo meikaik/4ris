@@ -7,10 +7,16 @@
 - Multiple levels with different difficulties
 - Hint feature
 - Enhanced graphics using bitmaps (C++ XWindow)
-- Sound effect support on Linux/Mac OS X
+- Sound effect support on Linux/MacOS
 - Arrow key support
 - Smart pointer integratino
 
+#### Requirements
+- GCC compiler
+- X11 support (Quartz on MacOS) for graphics
+
 #### Compilation
 - Execute `make` (or `make clean` to clean up object files after compilation) to generate executable
- 
+
+#### Screenshots
+![XWindow Screenshot](https://i.imgur.com/Xfwhii6.png) 
